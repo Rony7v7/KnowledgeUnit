@@ -9,7 +9,9 @@ public class Project {
     private Date plannedStartDate;
     private Date plannedEndDate;
     private double budget;
-    
-    private String[] projectManagers;
+
+    private Manager[] projectManagers;
+    private Client[] projectClients;
+
 
 }
