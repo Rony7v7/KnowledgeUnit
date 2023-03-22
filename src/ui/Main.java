@@ -1,10 +1,14 @@
 package ui;
 
 import java.util.Scanner;
+import model.Project;
 
 class Main{
 
     private static Scanner input = new Scanner(System.in);
+    
+    private static final int SIZE = 10; 
+    private static Project[] projects = new Project[SIZE];
 
     public static void main(String[] args) {
         int option = menu();
