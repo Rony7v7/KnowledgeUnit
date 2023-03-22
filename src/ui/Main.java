@@ -34,7 +34,7 @@ class Main{
             System.out.println("");
 
             if(option < 1 || option > 10){
-                System.out.println("Elija una opción valida *\n");
+                System.out.println("OPCIÓN INVALIDA*\n");
             }
 
         }while(option < 1 || option > 10);
