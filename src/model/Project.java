@@ -11,6 +11,6 @@ public class Project {
     private double budget;
 
     private Manager[] projectManagers;
-    private Client[] projectClients;
+    private Client client;
 
 }
