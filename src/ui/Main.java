@@ -11,7 +11,13 @@ class Main{
     private static Project[] projects = new Project[SIZE];
 
     public static void main(String[] args) {
-        int option = menu();
+        int option;
+
+        do{
+            option = menu();
+            executeOption(option);
+        }while( option != 11 );
+
     }
 
     public static int menu() {
@@ -32,16 +38,17 @@ class Main{
                                "8. Proyecto con más capsulas registradas\n"+
                                "9. Verificar registro de capsulas\n"+
                                "10. Busqueda de lecciones\n\n"+
+                               "11. Exit\n\n"+
                                " >> ");
             option = input.nextInt();
             input.nextLine();
             System.out.println("");
 
-            if(option < 1 || option > 10){
+            if(option < 1 || option > 11){
                 System.out.println("OPCIÓN INVALIDA*\n");
             }
 
-        }while(option < 1 || option > 10);
+        }while(option < 1 || option > 11);
 
         return option;
     }
@@ -67,6 +74,8 @@ class Main{
             case 9:
                 break;
             case 10:
+                break;
+            default:
                 break;
         }
     }
@@ -104,6 +113,6 @@ class Main{
     }
 
     public static void searchLesson() {
-        
+
     }
 }
