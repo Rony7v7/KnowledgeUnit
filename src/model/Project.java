@@ -13,5 +13,4 @@ public class Project {
     private Manager[] projectManagers;
     private Client[] projectClients;
 
-
 }

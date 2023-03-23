@@ -70,4 +70,40 @@ class Main{
                 break;
         }
     }
+
+    public static void createProjec() {
+        
+    }
+
+    public static void endProject() {
+
+    }
+
+    public static void registerCapsule() {
+        
+    }
+
+    public static void approveCapsule() {
+        
+    }
+
+    public static void listCapsules() {
+
+    }
+
+    public static void listlessons() {
+
+    }
+
+    public static void showFullerProject() {
+        
+    }
+
+    public static void verifyCapsuleRegister() {
+
+    }
+
+    public static void searchLesson() {
+        
+    }
 }
