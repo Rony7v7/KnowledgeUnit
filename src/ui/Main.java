@@ -24,8 +24,8 @@ class Main{
                                "1. Crear proyecto\n"+
                                "2. Culminar etapa de un proyecto\n"+
                                "3. Registrar cápsula\n"+
-                               "4. Registrar cápsula\n"+
-                               "5. Aprobar cápsula\n\n"+
+                               "4. Aprobar cápsula\n"+
+                               "5. Publicar cápsula\n\n"+
                                "- Informes y estadisticas\n\n"+
                                "6. Listar cápsulas\n"+
                                "7. Listar lecciones aprendidas\n"+
