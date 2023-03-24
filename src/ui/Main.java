@@ -1,26 +1,34 @@
 package ui;
 
 import java.util.Scanner;
+
+import model.GreenSQA;
 import model.Project;
 
 class Main{
 
-    private static Scanner input = new Scanner(System.in);
-    
-    private static final int SIZE = 10; 
-    private static Project[] projects = new Project[SIZE];
+    private Scanner input;
+    private GreenSQA controller;
+
+    public Main() {
+        controller = new GreenSQA();
+        input = new Scanner(System.in);
+    }
 
     public static void main(String[] args) {
+
+        Main view = new Main();
+
         int option;
 
         do{
-            option = menu();
-            executeOption(option);
+            option = view.menu();
+            view.executeOption(option);
         }while( option != 11 );
 
     }
 
-    public static int menu() {
+    public int menu() {
         int option = 0;
 
         do{
@@ -53,7 +61,7 @@ class Main{
         return option;
     }
 
-    public static void executeOption(int option) {
+    public void executeOption(int option) {
         switch (option) {
             case 1:
                 break;
@@ -80,39 +88,4 @@ class Main{
         }
     }
 
-    public static void createProjec() {
-        
-    }
-
-    public static void endProject() {
-
-    }
-
-    public static void registerCapsule() {
-        
-    }
-
-    public static void approveCapsule() {
-        
-    }
-
-    public static void listCapsules() {
-
-    }
-
-    public static void listlessons() {
-
-    }
-
-    public static void showFullerProject() {
-        
-    }
-
-    public static void verifyCapsuleRegister() {
-
-    }
-
-    public static void searchLesson() {
-
-    }
 }
