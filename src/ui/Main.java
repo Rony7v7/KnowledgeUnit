@@ -88,7 +88,7 @@ class Main{
     }
 
     public void initProject() { 
-        if(controller.projectsIsEmpty() != controller.getSIZE()-1) { //Max position into projects array
+        if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
             //Manager[] projectManagers;
             //Client client;
             controller.addProject(null, 0, 0, null, null);

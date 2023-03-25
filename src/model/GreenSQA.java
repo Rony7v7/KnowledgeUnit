@@ -14,7 +14,7 @@ public class GreenSQA {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, durationInMonths);
-        
+
         for(int i = 0; i < SIZE ; i++) {
             if ( projects[i] == null) {
                 projects[i] = new Project(name, startDate, endDate, budget, managers, client);
@@ -71,7 +71,7 @@ public class GreenSQA {
 
 
     //Getters
-    public int getSIZE() {
+    public int getProjectsSIZE() {
         return SIZE;
     }
 
