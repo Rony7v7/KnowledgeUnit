@@ -101,7 +101,7 @@ class Main{
                              "Nombre del proyecto: ");
             name = input.next();
             
-            System.out.print("\nDuración del proyecto");
+            System.out.println("\nDuración del proyecto\n");
             durationInMonths = inputStagesDuration();
 
 
