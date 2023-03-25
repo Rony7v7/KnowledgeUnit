@@ -85,13 +85,13 @@ public class GreenSQA {
         projects[(projectsIsEmpty())].setName(name);
     }
 
-    public void setRecentProjectDurationInMonths(int[] MonthsPerStage) {
+    public void setRecentProjectDurationInMonths(int[] monthsPerStage) {
         int totalMonthsProject = 0;
         Calendar endPlannedDate = Calendar.getInstance();
 
-        for(int i = 0; i < MonthsPerStage.length ; i++) {
-            totalMonthsProject += MonthsPerStage[i];
-            projects[projectsIsEmpty()].setMonthsPerStage(i, MonthsPerStage[i]);
+        for(int i = 0; i < monthsPerStage.length ; i++) {
+            totalMonthsProject += monthsPerStage[i];
+            projects[projectsIsEmpty()].setMonthsPerStage(i, monthsPerStage[i]);
         }
 
         endPlannedDate.add(Calendar.MONTH, totalMonthsProject);
