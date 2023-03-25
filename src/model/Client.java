@@ -9,4 +9,12 @@ public class Client {  //INNECESARIO?
         this.phoneNumer = phoneNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+    
+    public String getPhoneNumer() {
+        return phoneNumer;
+    }
+
 }

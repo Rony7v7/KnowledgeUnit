@@ -8,4 +8,12 @@ public class Manager { //INNECESARIO?
         this.name = name;
         this.phoneNumer = phoneNumber;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumer() {
+        return phoneNumer;
+    }
 }
