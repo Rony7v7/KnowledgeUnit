@@ -10,7 +10,6 @@ public class Project {
     private double budget;
     private Manager[] projectManagers;
     private Client client;
-
     private Stage[] stages = {new Stage("INICIO",true),
                               new Stage("ANALISIS",false), 
                               new Stage("DISEÑO",false), 
@@ -56,6 +55,9 @@ public class Project {
         }
     }
 
+    public void setStageDates() {
+        
+    }
 
     //Getters
     public String[] getStageNames() {
@@ -86,5 +88,24 @@ public class Project {
 
     public Client getClient() {
         return client;
+    }
+
+    public String getStageActive() {
+        boolean isActive = false;
+        String stageName = "";
+
+        for(int i = 0; i < stages.length && !isActive ; i++) {
+            if(stages[i].getIsActive()) {
+                stageName = stages[i].getName();
+                isActive = true;
+            }
+        }
+        return stageName;
+    }
+
+    // Control Methods
+
+    public void closeStage() {
+
     }
 }

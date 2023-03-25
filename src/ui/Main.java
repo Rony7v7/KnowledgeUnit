@@ -64,7 +64,7 @@ class Main{
         switch (option) {
             case 1: initProject();
                 break;
-            case 2:
+            case 2: closeStage();
                 break;
             case 3:
                 break;
@@ -114,6 +114,16 @@ class Main{
         
     }
 
+    public void closeStage() {
+        int projectPos = listProjectsToChoose()-1;
+        
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
+
+    //-------------Aux Methods -----------
+
     public void cleanScreen() {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
@@ -129,5 +139,19 @@ class Main{
             input.nextLine();
         }
         return MonthsPerStage;
+    }
+
+    public int listProjectsToChoose() { //VALIDAR
+        int option = 0;
+        System.out.println("De que proyecto desea culminar la etapa");
+
+        for(int i = 0; i <= controller.projectsIsEmpty();i++) {
+            System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActve(i));
+        }
+        System.out.print(">> ");
+        option = input.nextInt();
+        input.nextLine();
+
+        return option; 
     }
 }

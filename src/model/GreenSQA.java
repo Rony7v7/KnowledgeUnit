@@ -23,8 +23,8 @@ public class GreenSQA {
         }
     }
 
-    public void endProject() {
-
+    public void closeStageProject(int projectPosition) {
+        projects[projectPosition].closeStage();
     }
 
     public void registerCapsule() {
@@ -79,6 +79,19 @@ public class GreenSQA {
         return projects[0].getStageNames();
     }
 
+    public String[] getProjectNames() {
+        int lastedFullPosition = projectsIsEmpty();
+        String[] projectNames = new String[lastedFullPosition+1];
+
+        for(int i = 0; i <= lastedFullPosition ; i++) {
+            projectNames[i] = projects[i].getName();
+        }
+        return projectNames;
+    }
+
+    public String getStageActve(int projectPosition) {
+        return projects[projectPosition].getStageActive();
+    }
 
     //Setters
     public void setRecentProjectName(String name) {
