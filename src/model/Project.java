@@ -80,4 +80,11 @@ public class Project {
         return budget;
     }
 
+    public Manager[] getProjectManagers() {
+        return projectManagers;
+    }
+
+    public Client getClient() {
+        return client;
+    }
 }
