@@ -1,9 +1,7 @@
 package ui;
 
 import java.util.Scanner;
-
 import model.GreenSQA;
-import model.Project;
 
 class Main{
 
@@ -32,28 +30,31 @@ class Main{
         int option = 0;
 
         do{
-            System.out.print("\n--------- BIENVENIDO --------\n"+
-                               "      ELige una opción        \n\n"+
-                               "- Etapas y capsulas\n\n"+
-                               "1. Crear proyecto\n"+
-                               "2. Culminar etapa de un proyecto\n"+
-                               "3. Registrar cápsula\n"+
-                               "4. Aprobar cápsula\n"+
-                               "5. Publicar cápsula\n\n"+
-                               "- Informes y estadisticas\n\n"+
-                               "6. Listar cápsulas\n"+
-                               "7. Listar lecciones aprendidas\n"+
-                               "8. Proyecto con más capsulas registradas\n"+
-                               "9. Verificar registro de capsulas\n"+
-                               "10. Busqueda de lecciones\n\n"+
-                               "11. Exit\n\n"+
-                               " >> ");
+            cleanScreen();
+            System.out.print("--------- BIENVENIDO --------\n"+
+                             "       ELige una opción\n\n"+
+                             "- Gestion y capsulas\n\n"+
+                             "1. Crear proyecto\n"+
+                             "2. Culminar etapa de un proyecto\n"+
+                             "3. Registrar cápsula\n"+
+                             "4. Aprobar cápsula\n"+
+                             "5. Publicar cápsula\n\n"+
+                             "- Informes y estadisticas\n\n"+
+                             "6. Listar cápsulas\n"+
+                             "7. Listar lecciones aprendidas\n"+
+                             "8. Proyecto con más capsulas registradas\n"+
+                             "9. Verificar registro de capsulas\n"+
+                             "10. Busqueda de lecciones\n\n"+
+                             "11. Exit\n\n"+
+                             ">> ");
             option = input.nextInt();
             input.nextLine();
-            System.out.println("");
+            cleanScreen();
 
             if(option < 1 || option > 11){
                 System.out.println("OPCIÓN INVALIDA*\n");
+                System.out.print("\nENTER PARA CONTINUAR.");
+                input.nextLine();
             }
 
         }while(option < 1 || option > 11);
@@ -63,7 +64,7 @@ class Main{
 
     public void executeOption(int option) {
         switch (option) {
-            case 1:
+            case 1: initProject();
                 break;
             case 2:
                 break;
@@ -88,4 +89,53 @@ class Main{
         }
     }
 
+    public void initProject() { 
+        if(controller.projectsIsEmpty() != 9) { //Max position into projects array
+            String name;
+            int durationInMonths; 
+            double budget;
+            //Manager[] projectManagers;
+            //Client client;
+
+            System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
+                             "Nombre del proyecto: ");
+            name = input.next();
+            
+            System.out.print("\nDuración del proyecto");
+            durationInMonths = inputStagesDuration();
+
+
+            System.out.print("\nPresupuesto del proyecto: ");
+            budget = input.nextDouble();
+            input.nextLine();
+
+            controller.createProjec(name, durationInMonths, budget, null, null);
+            System.out.println("\nPROYECTO CREADO EXITOSAMENTE!");
+            
+        } else {
+            System.out.println("\nCAPACIDAD MAXIMA DE PROYECTOS");
+        }
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+        
+    }
+
+    public void cleanScreen() {
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();
+    }
+
+    public int inputStagesDuration() {
+        String[] stageNames = {"INICIO","ANÁLISIS","DISEÑO","EJECUCIÓN","CIERRE Y SEGUIMIENTO","CONTROL"};
+        int[] amountMonthsPerStage = new int[6];
+        int distanceStartToEnd = 0;
+
+        for(int i = 0; i < 6; i++) {
+            System.out.print("Ingresa la duración en meses de la etapa "+stageNames[i]+" : ");
+            amountMonthsPerStage[i] = input.nextInt();
+            input.nextLine();
+            distanceStartToEnd += amountMonthsPerStage[i];
+        }
+        return distanceStartToEnd;
+    }
 }
