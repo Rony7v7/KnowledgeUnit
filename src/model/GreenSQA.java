@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Calendar; //??? SE DEBE IMPORTAR OTRA VEZ? O DONDE SE IMPORTA POR SOLO UNA VEZ
 
 public class GreenSQA {
@@ -13,7 +14,7 @@ public class GreenSQA {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, durationInMonths);
-
+        
         for(int i = 0; i < SIZE ; i++) {
             if ( projects[i] == null) {
                 projects[i] = new Project(name, startDate, endDate, budget, managers, client);
@@ -86,12 +87,16 @@ public class GreenSQA {
 
     public void setRecentProjectDurationInMonths(int[] MonthsPerStage) {
         int totalMonthsProject = 0;
+        Calendar endPlannedDate = Calendar.getInstance();
 
         for(int i = 0; i < MonthsPerStage.length ; i++) {
             totalMonthsProject += MonthsPerStage[i];
             projects[projectsIsEmpty()].setMonthsPerStage(i, MonthsPerStage[i]);
-
         }
+
+        endPlannedDate.add(Calendar.MONTH, totalMonthsProject);
+
+        projects[projectsIsEmpty()].setEndPlannedDate(endPlannedDate);
     }
 
     public void setRecentProjectBudget(double budget) {
