@@ -85,9 +85,13 @@ public class GreenSQA {
     }
 
     public void setRecentProjectDurationInMonths(int[] MonthsPerStage) {
-        projects[projectsIsEmpty()].setMonthsPerStage(MonthsPerStage[0], MonthsPerStage[1], 
-                                                      MonthsPerStage[2], MonthsPerStage[3],
-                                                      MonthsPerStage[4], MonthsPerStage[5]);
+        int totalMonthsProject = 0;
+
+        for(int i = 0; i < MonthsPerStage.length ; i++) {
+            totalMonthsProject += MonthsPerStage[i];
+            projects[projectsIsEmpty()].setMonthsPerStage(i, MonthsPerStage[i]);
+
+        }
     }
 
     public void setRecentProjectBudget(double budget) {
