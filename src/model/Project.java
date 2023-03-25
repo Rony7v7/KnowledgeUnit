@@ -27,4 +27,39 @@ public class Project {
         this.client = client;
     }
 
+
+    //Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStartPlannedDate(Calendar startPlannedDate) {
+        this.startPlannedDate = startPlannedDate;
+    }
+
+    public void setEndPlannedDate(Calendar endPlannedDate) {
+        this.endPlannedDate = endPlannedDate;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public void setMonthsPerStage(int stage1, int stage2, int stage3, int stage4, int stage5, int stage6) {
+        stages[0].setDurationInMonths(stage1);
+        stages[1].setDurationInMonths(stage2);
+        stages[2].setDurationInMonths(stage3);
+        stages[3].setDurationInMonths(stage4);
+        stages[4].setDurationInMonths(stage5);
+        stages[5].setDurationInMonths(stage6);
+    }
+
+
+    //Getters
+    public String[] getStageNames() {
+        String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
+                               stages[4].getName(),stages[5].getName()};
+        return stageNames;
+    }
+
 }

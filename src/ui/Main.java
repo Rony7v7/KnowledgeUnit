@@ -14,9 +14,7 @@ class Main{
     }
 
     public static void main(String[] args) {
-
         Main view = new Main();
-
         int option;
 
         do{
@@ -90,26 +88,22 @@ class Main{
     }
 
     public void initProject() { 
-        if(controller.projectsIsEmpty() != 9) { //Max position into projects array
-            String name;
-            int durationInMonths; 
-            double budget;
+        if(controller.projectsIsEmpty() != controller.getSIZE()-1) { //Max position into projects array
             //Manager[] projectManagers;
             //Client client;
+            controller.addProject(null, 0, 0, null, null);
 
             System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
                              "Nombre del proyecto: ");
-            name = input.next();
+            controller.setRecentProjectName(input.next()); 
             
             System.out.println("\nDuración del proyecto\n");
-            durationInMonths = inputStagesDuration();
-
+            controller.setRecentProjectDurationInMonths(inputStagesDuration());
 
             System.out.print("\nPresupuesto del proyecto: ");
-            budget = input.nextDouble();
+            controller.setRecentProjectBudget(input.nextDouble());
             input.nextLine();
 
-            controller.createProjec(name, durationInMonths, budget, null, null);
             System.out.println("\nPROYECTO CREADO EXITOSAMENTE!");
             
         } else {
@@ -125,17 +119,15 @@ class Main{
         System.out.flush();
     }
 
-    public int inputStagesDuration() {
-        String[] stageNames = {"INICIO","ANÁLISIS","DISEÑO","EJECUCIÓN","CIERRE Y SEGUIMIENTO","CONTROL"};
-        int[] amountMonthsPerStage = new int[6];
-        int distanceStartToEnd = 0;
+    public int[] inputStagesDuration( ) {
+        String[] stageNames = controller.getStageNames();
+        int[] MonthsPerStage = new int[6];
 
         for(int i = 0; i < 6; i++) {
             System.out.print("Ingresa la duración en meses de la etapa "+stageNames[i]+" : ");
-            amountMonthsPerStage[i] = input.nextInt();
+            MonthsPerStage[i] = input.nextInt();
             input.nextLine();
-            distanceStartToEnd += amountMonthsPerStage[i];
         }
-        return distanceStartToEnd;
+        return MonthsPerStage;
     }
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class Client {
+public class Client {  //INNECESARIO?
     private String name;
     private String phoneNumer;
     

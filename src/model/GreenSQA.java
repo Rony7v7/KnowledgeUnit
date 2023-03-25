@@ -9,7 +9,7 @@ public class GreenSQA {
         //Constructor
     }
 
-    public void createProjec(String name, int durationInMonths, Double budget, Manager[] managers, Client client) {
+    public void addProject(String name, int durationInMonths, double budget, Manager[] managers, Client client) {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, durationInMonths);
@@ -68,10 +68,30 @@ public class GreenSQA {
         return fullPositions;
     }
 
-    public Calendar toCalendar(int[] dateString) {
-        Calendar date = Calendar.getInstance();
-        date.set(dateString[2], dateString[1], dateString[0]); 
-        return date;
+
+    //Getters
+    public int getSIZE() {
+        return SIZE;
+    }
+
+    public String[] getStageNames() {
+        return projects[0].getStageNames();
+    }
+
+
+    //Setters
+    public void setRecentProjectName(String name) {
+        projects[(projectsIsEmpty())].setName(name);
+    }
+
+    public void setRecentProjectDurationInMonths(int[] MonthsPerStage) {
+        projects[projectsIsEmpty()].setMonthsPerStage(MonthsPerStage[0], MonthsPerStage[1], 
+                                                      MonthsPerStage[2], MonthsPerStage[3],
+                                                      MonthsPerStage[4], MonthsPerStage[5]);
+    }
+
+    public void setRecentProjectBudget(double budget) {
+       projects[projectsIsEmpty()].setBudget(budget); 
     }
 
 }

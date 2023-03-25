@@ -1,5 +1,5 @@
 package model;
 
-public class employee {
+public class Employee {
     
 }
