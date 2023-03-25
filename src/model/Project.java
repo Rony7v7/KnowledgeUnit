@@ -55,8 +55,26 @@ public class Project {
         }
     }
 
-    public void setStageDates() {
-        
+    public void setStagePlannedStartDate(int stagePosition ,Calendar startPlannedDate) {
+        boolean setted = false;
+
+        for(int i = 0; i < stages.length && !setted; i++) {
+            if(i == stagePosition) {
+                stages[i].setStartPlannedDate(startPlannedDate);;
+                setted = true;
+            }
+        }
+    }
+
+    public void setStagePlannedEndDate(int stagePosition, Calendar endPlannedDate) {
+        boolean setted = false;
+
+        for(int i = 0; i < stages.length && !setted; i++) {
+            if(i == stagePosition) {
+                stages[i].setEndPlannedDate(endPlannedDate);;
+                setted = true;
+            }
+        }
     }
 
     //Getters

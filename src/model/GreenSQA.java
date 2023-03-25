@@ -98,18 +98,36 @@ public class GreenSQA {
         projects[(projectsIsEmpty())].setName(name);
     }
 
-    public void setRecentProjectDurationInMonths(int[] monthsPerStage) {
+    public void setRecentProjectDurationAndDates(int[] monthsPerStage) {
         int totalMonthsProject = 0;
-        Calendar endPlannedDate = Calendar.getInstance();
+        int projectPos = projectsIsEmpty();
+        Calendar projectPlannedEndDate = Calendar.getInstance();
+        Calendar stagePlannedStartDate = Calendar.getInstance();
+        Calendar stagePlannedEndDate = Calendar.getInstance();
 
+        //Set duration in months per Stage and planned start - end dates
         for(int i = 0; i < monthsPerStage.length ; i++) {
+
+            //Set Start planned date
+            stagePlannedStartDate.add(Calendar.MONTH, totalMonthsProject);
+            projects[i].setStartPlannedDate(stagePlannedEndDate);
+
             totalMonthsProject += monthsPerStage[i];
-            projects[projectsIsEmpty()].setMonthsPerStage(i, monthsPerStage[i]);
+
+            //Set End planned date
+            stagePlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
+            projects[i].setEndPlannedDate(stagePlannedEndDate);
+            
+            //Set months
+            projects[projectPos].setMonthsPerStage(i, monthsPerStage[i]); 
+
         }
+        
+        //Set end planned date of project 
+        projectPlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
+        projects[projectPos].setEndPlannedDate(projectPlannedEndDate);
 
-        endPlannedDate.add(Calendar.MONTH, totalMonthsProject);
 
-        projects[projectsIsEmpty()].setEndPlannedDate(endPlannedDate);
     }
 
     public void setRecentProjectBudget(double budget) {

@@ -27,8 +27,28 @@ public class Stage {
     }
 
     //Setters
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public void setDurationInMonths(int amountMonths) {
         this.durationInMonths = amountMonths;
+    }
+
+    public void setStartPlannedDate(Calendar startPlannedDate) {
+        this.startPlannedDate = startPlannedDate;
+    }
+
+    public void setEndPlannedDate(Calendar endPlannedDate) {
+        this.endPlannedDate = endPlannedDate;
+    }
+
+    public void setStartDate(Calendar startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
     }
 
     //Getters
@@ -40,5 +60,20 @@ public class Stage {
         return isActive;
     }
 
+    public Calendar getStartPlannedDate() {
+        return startPlannedDate;
+    }
+
+    public Calendar getEndPlannedDate() {
+        return endPlannedDate;
+    }
+
+    public Calendar getStartDate() {
+        return startDate;
+    }
+    
+    public Calendar getEndDate() {
+        return endDate;
+    }
 
 }

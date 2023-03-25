@@ -98,7 +98,7 @@ class Main{
             controller.setRecentProjectName(input.next()); 
             
             System.out.println("\nDuración del proyecto\n");
-            controller.setRecentProjectDurationInMonths(inputStagesDuration());
+            controller.setRecentProjectDurationAndDates(inputStagesDuration());
 
             System.out.print("\nPresupuesto del proyecto: ");
             controller.setRecentProjectBudget(input.nextDouble());
