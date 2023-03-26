@@ -116,7 +116,7 @@ class Main{
 
     public void closeStage() {
         int projectPos = listProjectsToChoose()-1;
-        boolean validation = (projectPos == 0) ? controller.closeStageProject(projectPos):false;
+        boolean validation = (projectPos >= 0) ? controller.closeStageProject(projectPos):false;
         
         if(validation) {
             System.out.println("Etapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
@@ -149,18 +149,19 @@ class Main{
         return MonthsPerStage;
     }
 
-    public int listProjectsToChoose() { //VALIDAR
+    public int listProjectsToChoose() { //VALIDAR // ERROR
         int option = 0;
         int lastProjectPosition = controller.projectsIsEmpty();
 
         //if there are projects
         if(lastProjectPosition != -1) {
-            //if 
-            if(lastProjectPosition == controller.countInactiveProjects()-1){
+            //if there are not active projects
+            if(lastProjectPosition+1 != controller.countInactiveProjects()) {
                 System.out.println("De que proyecto desea culminar la etapa\n");
 
-                for(int i = 0; i <= lastProjectPosition;i++) {
+                for(int i = 0 ; i <= lastProjectPosition ; i++) {
                     // if there are actives projects
+                    
                     if(controller.getProjectStatus(i)) {
                         System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
                     } else{

@@ -31,7 +31,6 @@ public class Project {
     //Setters
     public void setActive(boolean isActive) {
         this.isActive = isActive;
-        System.out.println("estado cambio de "+!isActive+ " a "+isActive);
     }
 
     public void setName(String name) {
@@ -141,7 +140,8 @@ public class Project {
                 stages[i].setActive(false);
                 stages[i+1].setActive(true);
                 isSwitched = true;
-            } else {
+
+            } else if(i == stages.length-1) {
                 setActive(false);
             }
         }
