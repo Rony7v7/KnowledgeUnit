@@ -115,7 +115,7 @@ class Main{
     }
 
     public void closeStage() {
-        int projectPos = listProjectsToChoose()-1;
+        int projectPos = listActivesProjectsToChoose()-1;
         boolean validation = (projectPos >= 0) ? controller.closeStageProject(projectPos):false;
         
         if(validation) {
@@ -149,7 +149,7 @@ class Main{
         return MonthsPerStage;
     }
 
-    public int listProjectsToChoose() { //VALIDAR // ERROR
+    public int listActivesProjectsToChoose() { //VALIDAR
         int option = 0;
         int lastProjectPosition = controller.projectsIsEmpty();
 
