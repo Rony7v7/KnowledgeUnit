@@ -87,7 +87,7 @@ class Main{
         }
     }
 
-    public void initProject() { 
+    public void initProject() { // no lee nombres de proyectos separados por espacios
         if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
             //Manager[] projectManagers;
             //Client client;
@@ -116,7 +116,15 @@ class Main{
 
     public void closeStage() {
         int projectPos = listProjectsToChoose()-1;
+        boolean validation = (projectPos == 0) ? controller.closeStageProject(projectPos):false;
         
+        if(validation) {
+            System.out.println("Etapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
+        } else if(projectPos != -1){
+            System.out.println("Ultima etapa culminada con éxito, proyecto finalizado.");
+        } else{
+            System.out.println("No hay proyectos activos.");
+        }
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
@@ -143,14 +151,28 @@ class Main{
 
     public int listProjectsToChoose() { //VALIDAR
         int option = 0;
-        System.out.println("De que proyecto desea culminar la etapa");
+        int lastProjectPosition = controller.projectsIsEmpty();
 
-        for(int i = 0; i <= controller.projectsIsEmpty();i++) {
-            System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActve(i));
+        //if there are projects
+        if(lastProjectPosition != -1) {
+            //if 
+            if(lastProjectPosition == controller.countInactiveProjects()-1){
+                System.out.println("De que proyecto desea culminar la etapa\n");
+
+                for(int i = 0; i <= lastProjectPosition;i++) {
+                    // if there are actives projects
+                    if(controller.getProjectStatus(i)) {
+                        System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
+                    } else{
+                        option ++; //skip option to choose the position correct into array
+                    }
+                }
+                
+                System.out.print(">> ");
+                option = input.nextInt();
+                input.nextLine();
+            }
         }
-        System.out.print(">> ");
-        option = input.nextInt();
-        input.nextLine();
 
         return option; 
     }

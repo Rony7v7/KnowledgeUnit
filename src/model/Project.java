@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 public class Project {
     
+    private boolean isActive = true;
     private String name;
     private Calendar startPlannedDate;
     private Calendar endPlannedDate;
@@ -28,6 +29,11 @@ public class Project {
 
 
     //Setters
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+        System.out.println("estado cambio de "+!isActive+ " a "+isActive);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -78,6 +84,10 @@ public class Project {
     }
 
     //Getters
+    public boolean getStatus() {
+        return isActive;
+    }
+
     public String[] getStageNames() {
         String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
                                stages[4].getName(),stages[5].getName()};
@@ -123,7 +133,18 @@ public class Project {
 
     // Control Methods
 
-    public void closeStage() {
-
+    public boolean closeStage() {
+        boolean isSwitched = false;
+        for(int i = 0; i < stages.length && !isSwitched ; i++) {
+            //  Get stage active and verify if is not the last one
+            if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
+                stages[i].setActive(false);
+                stages[i+1].setActive(true);
+                isSwitched = true;
+            } else {
+                setActive(false);
+            }
+        }
+        return isSwitched;
     }
 }

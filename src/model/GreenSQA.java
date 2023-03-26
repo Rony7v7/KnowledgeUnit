@@ -23,8 +23,8 @@ public class GreenSQA {
         }
     }
 
-    public void closeStageProject(int projectPosition) {
-        projects[projectPosition].closeStage();
+    public boolean closeStageProject(int projectPosition) {
+        return projects[projectPosition].closeStage();
     }
 
     public void registerCapsule() {
@@ -55,28 +55,37 @@ public class GreenSQA {
 
     }
     
-    //Auxiliares
+    //Aux
     public int projectsIsEmpty() { //NO SE SI SEA NECESARIA TOTALMENTE
-        int fullPositions = 0;
+        int lastFullPosition = -1;
         boolean isEmpty = false;
+
         for(int i = 0; (i < SIZE && !isEmpty) ; i++) {
             if (projects[i] != null) {
-                fullPositions = i;
+                lastFullPosition = i;
             } else {
                 isEmpty = true;
             }
         }
-        return fullPositions;
+        return lastFullPosition;
     }
 
+    public int countInactiveProjects() {
+        int amountInactiveProjects = 0;
+        
+        for(int i = 0; i < SIZE && projectsIsEmpty() == -1; i++) {
+            if(!projects[i].getStatus()) {
+                amountInactiveProjects++;
+            }
+        }
+        return amountInactiveProjects;
+    }
 
-    //Getters
+    //---------  Getters  ----------
+
+    //Projects
     public int getProjectsSIZE() {
         return SIZE;
-    }
-
-    public String[] getStageNames() {
-        return projects[0].getStageNames();
     }
 
     public String[] getProjectNames() {
@@ -89,11 +98,20 @@ public class GreenSQA {
         return projectNames;
     }
 
-    public String getStageActve(int projectPosition) {
+    public boolean getProjectStatus(int projectPosition) {
+        return projects[projectPosition].getStatus();
+    }
+
+    //Stages
+    public String[] getStageNames() {
+        return projects[0].getStageNames();
+    }
+
+    public String getStageActive(int projectPosition) {
         return projects[projectPosition].getStageActive();
     }
 
-    //Setters
+    //---------  Setters  ---------
     public void setRecentProjectName(String name) {
         projects[(projectsIsEmpty())].setName(name);
     }
@@ -110,13 +128,13 @@ public class GreenSQA {
 
             //Set Start planned date
             stagePlannedStartDate.add(Calendar.MONTH, totalMonthsProject);
-            projects[i].setStartPlannedDate(stagePlannedEndDate);
+            projects[projectPos].setStartPlannedDate(stagePlannedEndDate);
 
             totalMonthsProject += monthsPerStage[i];
 
             //Set End planned date
             stagePlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
-            projects[i].setEndPlannedDate(stagePlannedEndDate);
+            projects[projectPos].setEndPlannedDate(stagePlannedEndDate);
             
             //Set months
             projects[projectPos].setMonthsPerStage(i, monthsPerStage[i]); 
