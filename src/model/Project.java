@@ -6,11 +6,19 @@ public class Project {
     
     private boolean isActive = true;
     private String name;
-    private Calendar startPlannedDate;
+    private Calendar startPlannedDate; //Fechas reales ?
     private Calendar endPlannedDate;
     private double budget;
-    //private Manager[] projectManagers;
-    //private Client client;
+    private String[] clientData;
+
+    private Employee[] collaborators = {new Employee("COLABORADOR 1", "COLLABORATOR"),
+                                        new Employee("COLABORADOR 2", "COLLABORATOR"),
+                                        new Employee("COLABORADOR 3", "COLLABORATOR"),
+                                        new Employee("COLABORADOR 4", "COLLABORATOR"),
+                                        new Employee("COLABORADOR 5", "COLLABORATOR")};
+
+    private Employee[] managers;
+    
     private Stage[] stages = {new Stage("INICIO",true),
                               new Stage("ANALISIS",false), 
                               new Stage("DISEÑO",false), 
@@ -18,11 +26,13 @@ public class Project {
                               new Stage("CIERRE Y SEGUIMIENTO",false), 
                               new Stage("CONTROL",false)};
 
-    public Project(String name, Calendar startDate, Calendar endDate, Double budget) {
+    public Project(String name, Calendar startDate, Calendar endDate, Double budget, Employee[] managers, String[] clientData) {
         this.name = name;
         this.startPlannedDate = startDate;
         this.endPlannedDate = endDate;
         this.budget = budget;
+        this.managers = managers;
+        this.clientData = clientData;
     }
 
 
@@ -120,7 +130,13 @@ public class Project {
         return stageName;
     }
 
-    // Control Methods
+    public Employee[] getCollaborators() {
+        return collaborators;
+    }
+
+    public Employee[] getManagers() {
+        return managers;
+    }
 
     public boolean closeStage() {
         boolean isSwitched = false;

@@ -5,10 +5,10 @@ import java.util.Calendar;
 public class Stage {
     private String name;
     private boolean isActive;
-    private int durationInMonths;
+    private int durationInMonths; // dudo
     private Calendar startPlannedDate;
     private Calendar endPlannedDate;
-    private Calendar startDate;
+    private Calendar startDate; // setear
     private Calendar endDate;
 
 

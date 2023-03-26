@@ -5,19 +5,30 @@ import java.util.Calendar; //??? SE DEBE IMPORTAR OTRA VEZ? O DONDE SE IMPORTA P
 public class GreenSQA {
     private static final int SIZE = 10;
     private Project[] projects = new Project[SIZE];
-
+    private Employee[] managers = {new Employee("GERENTE 1", "MANAGER"),
+                                   new Employee("GERENTE 2", "MANAGER"),
+                                   new Employee("GERENTE 3", "MANAGER")};
+    
     public GreenSQA() {
         //Constructor
     }
 
-    public void addProject(String name, int durationInMonths, double budget) {
+    public void addProject(String name, int durationInMonths, double budget, int[] managersPosition, String[] clientData) { 
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, durationInMonths);
 
+        //Assigned managers choosed to managers into the proyect
+        Employee[] managersPerProject = new Employee[managersPosition.length];
+
+        for(int i = 0; i < managersPosition.length ; i++) {
+             managersPerProject[i] = managers[managersPosition[i]];
+        }
+
+        //Add project to the first valid position
         for(int i = 0; i < SIZE ; i++) {
             if ( projects[i] == null) {
-                projects[i] = new Project(name, startDate, endDate, budget);
+                projects[i] = new Project(name, startDate, endDate, budget, managersPerProject, clientData);
                 i = SIZE;
             }
         }
@@ -113,10 +124,21 @@ public class GreenSQA {
         return projects[projectPosition].getStageActive();
     }
 
-    //---------  Setters  ---------
-    public void setRecentProjectName(String name) {
-        projects[(projectsIsEmpty())].setName(name);
+    //Employees
+    public String[] getManagerNames() {
+        String[] managerNames = new String[managers.length];
+
+        for(int i = 0; i < managers.length; i++) {
+            managerNames[i] = managers[i].getName();
+        }
+
+        return managerNames;
     }
+
+    //---------  Setters  ---------
+    // public void setRecentProjectName(String name) {
+    //     projects[(projectsIsEmpty())].setName(name);
+    // }
 
     public void setRecentProjectDurationAndDates(int[] monthsPerStage) {
         int totalMonthsProject = 0;
@@ -150,8 +172,8 @@ public class GreenSQA {
 
     }
 
-    public void setRecentProjectBudget(double budget) {
-       projects[projectsIsEmpty()].setBudget(budget); 
-    }
+    // public void setRecentProjectBudget(double budget) {
+    //    projects[projectsIsEmpty()].setBudget(budget); 
+    // }
 
 }

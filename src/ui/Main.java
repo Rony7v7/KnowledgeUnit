@@ -89,25 +89,53 @@ class Main{
 
     public void initProject() { // no lee nombres de proyectos separados por espacios
         if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
-            //Manager[] projectManagers;
-            //Client client;
-            controller.addProject(null, 0, 0);
+            int[] managersPosition;
+            int amountManagers;
+            String[] clientData = new String[2];
+
+            String name;
+            double budget;
 
             System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
                              "Nombre del proyecto: ");
-            controller.setRecentProjectName(input.next()); 
+            name = input.nextLine();
             
-            System.out.println("\nDuración del proyecto\n");
-            controller.setRecentProjectDurationAndDates(inputStagesDuration());
+            System.out.print("\n- Participantes del proyecto\n\nNumero de gerentes (3 max.) : ");
 
-            System.out.print("\nPresupuesto del proyecto: ");
-            controller.setRecentProjectBudget(input.nextDouble());
+            //input Project Managers
+            amountManagers = input.nextInt();
+            input.nextLine();
+            amountManagers -= (amountManagers > 3) ? amountManagers%3:0; // if amountManagers > 3 Reduce to the max amount of Managers
+
+            managersPosition = new int[amountManagers];
+
+            for(int i = 0; i < amountManagers; i++) {
+                managersPosition[i] = inputEmployees("Gerente", 
+                                                     controller.getManagerNames(),
+                                                     controller.getManagerNames().length); //Managers Amount
+            }
+
+            //Input Project Client
+            System.out.print("\nNombre del cliente: ");
+            clientData[0] = input.nextLine();
+            System.out.print("\nNúmero de telefono: ");
+            clientData[1] = input.nextLine();
+            
+            System.out.print("\n- Presupuesto del proyecto: ");
+            budget = input.nextDouble();
             input.nextLine();
 
-            System.out.println("\nPROYECTO CREADO EXITOSAMENTE!");
+            //Constructor
+            controller.addProject(name, 0, budget, managersPosition, clientData);
+
+            System.out.println("\n - Duración del proyecto\n");
+            // Setted duration in months per stage of created project
+            controller.setRecentProjectDurationAndDates(inputStagesDuration());  
+
+            System.out.println("\nPROYECTO CREADO CON EXITO.");
             
         } else {
-            System.out.println("\nCAPACIDAD MAXIMA DE PROYECTOS");
+            System.out.println("\nCAPACIDAD MAXIMA DE PROYECTOS.");
         }
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
@@ -181,5 +209,19 @@ class Main{
         return option; 
     }
 
+    public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) {
+        int option = 0;
+
+        System.out.println("\nSelecciona el "+employeeRole+" :\n");
+        
+        for(int i = 0; i < amountEmployees; i++) {
+            System.out.println((i+1)+". "+employeeNames[i]);
+        }
+        System.out.print(">> ");
+        option = input.nextInt();
+        input.nextLine();
+
+        return option-1;
+    }
 
 }
