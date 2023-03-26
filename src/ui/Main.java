@@ -91,7 +91,7 @@ class Main{
         if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
             //Manager[] projectManagers;
             //Client client;
-            controller.addProject(null, 0, 0, null, null);
+            controller.addProject(null, 0, 0);
 
             System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
                              "Nombre del proyecto: ");
@@ -119,11 +119,11 @@ class Main{
         boolean validation = (projectPos >= 0) ? controller.closeStageProject(projectPos):false;
         
         if(validation) {
-            System.out.println("Etapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
+            System.out.println("\nEtapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
         } else if(projectPos != -1){
-            System.out.println("Ultima etapa culminada con éxito, proyecto finalizado.");
+            System.out.println("\nUltima etapa culminada con éxito, proyecto finalizado.");
         } else{
-            System.out.println("No hay proyectos activos.");
+            System.out.println("\nNo hay proyectos activos.");
         }
 
         System.out.print("\nENTER PARA CONTINUAR.");
@@ -157,24 +157,29 @@ class Main{
         if(lastProjectPosition != -1) {
             //if there are not active projects
             if(lastProjectPosition+1 != controller.countInactiveProjects()) {
+                int counterScreen = 0;
                 System.out.println("De que proyecto desea culminar la etapa\n");
 
-                for(int i = 0 ; i <= lastProjectPosition ; i++) {
+                for(int i = 0 ; i <= lastProjectPosition ; i++) { // TAL VEZ ASIGNAR ALGO EN UN ARREGLO PARA IMPRIMIRLO BIEN
+                    counterScreen ++;
                     // if there are actives projects
-                    
                     if(controller.getProjectStatus(i)) {
-                        System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
+                        System.out.println((counterScreen)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
                     } else{
                         option ++; //skip option to choose the position correct into array
+                        counterScreen --;
                     }
                 }
-                
+        
                 System.out.print(">> ");
-                option = input.nextInt();
+                option += input.nextInt();
                 input.nextLine();
+
             }
         }
 
         return option; 
     }
+
+
 }

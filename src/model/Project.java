@@ -9,8 +9,8 @@ public class Project {
     private Calendar startPlannedDate;
     private Calendar endPlannedDate;
     private double budget;
-    private Manager[] projectManagers;
-    private Client client;
+    //private Manager[] projectManagers;
+    //private Client client;
     private Stage[] stages = {new Stage("INICIO",true),
                               new Stage("ANALISIS",false), 
                               new Stage("DISEÑO",false), 
@@ -18,13 +18,11 @@ public class Project {
                               new Stage("CIERRE Y SEGUIMIENTO",false), 
                               new Stage("CONTROL",false)};
 
-    public Project(String name, Calendar startDate, Calendar endDate, Double budget, Manager[] managers, Client client) {
+    public Project(String name, Calendar startDate, Calendar endDate, Double budget) {
         this.name = name;
         this.startPlannedDate = startDate;
         this.endPlannedDate = endDate;
         this.budget = budget;
-        this.projectManagers = managers;
-        this.client = client;
     }
 
 
@@ -107,14 +105,6 @@ public class Project {
 
     public double getBudget() {
         return budget;
-    }
-
-    public Manager[] getProjectManagers() {
-        return projectManagers;
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     public String getStageActive() {

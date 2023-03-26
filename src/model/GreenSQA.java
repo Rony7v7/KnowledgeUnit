@@ -10,14 +10,14 @@ public class GreenSQA {
         //Constructor
     }
 
-    public void addProject(String name, int durationInMonths, double budget, Manager[] managers, Client client) {
+    public void addProject(String name, int durationInMonths, double budget) {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, durationInMonths);
 
         for(int i = 0; i < SIZE ; i++) {
             if ( projects[i] == null) {
-                projects[i] = new Project(name, startDate, endDate, budget, managers, client);
+                projects[i] = new Project(name, startDate, endDate, budget);
                 i = SIZE;
             }
         }
@@ -72,12 +72,14 @@ public class GreenSQA {
 
     public int countInactiveProjects() {
         int amountInactiveProjects = 0;
-        
-        for(int i = 0; i < SIZE && projectsIsEmpty() == -1; i++) {
+        int amountProjects = projectsIsEmpty()+1;
+
+        for(int i = 0; i < amountProjects; i++) {
             if(!projects[i].getStatus()) {
                 amountInactiveProjects++;
             }
         }
+
         return amountInactiveProjects;
     }
 
