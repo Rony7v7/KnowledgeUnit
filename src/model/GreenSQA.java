@@ -94,6 +94,17 @@ public class GreenSQA {
         return amountInactiveProjects;
     }
 
+    public boolean isInArray(int element, int[] array) {
+        //For each
+        boolean isInArray = false;
+        for (int i : array) {
+            if (i == element) {
+                isInArray = true;
+            }
+        }
+        return isInArray;
+    }
+
     //---------  Getters  ----------
 
     //Projects

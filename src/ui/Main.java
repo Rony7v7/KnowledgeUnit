@@ -87,7 +87,7 @@ class Main{
         }
     }
 
-    public void initProject() { // no lee nombres de proyectos separados por espacios
+    public void initProject() {
         if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
             int[] managersPosition;
             int amountManagers;
@@ -128,7 +128,7 @@ class Main{
             //Constructor
             controller.addProject(name, 0, budget, managersPosition, clientData);
 
-            System.out.println("\n - Duración del proyecto\n");
+            System.out.println("\n- Duración del proyecto\n");
             // Setted duration in months per stage of created project
             controller.setRecentProjectDurationAndDates(inputStagesDuration());  
 
@@ -180,33 +180,51 @@ class Main{
     public int listActivesProjectsToChoose() { //VALIDAR
         int option = 0;
         int lastProjectPosition = controller.projectsIsEmpty();
-
+        
         //if there are projects
         if(lastProjectPosition != -1) {
             //if there are not active projects
             if(lastProjectPosition+1 != controller.countInactiveProjects()) {
-                int counterScreen = 0;
-                System.out.println("De que proyecto desea culminar la etapa\n");
-
-                for(int i = 0 ; i <= lastProjectPosition ; i++) { // TAL VEZ ASIGNAR ALGO EN UN ARREGLO PARA IMPRIMIRLO BIEN
-                    counterScreen ++;
-                    // if there are actives projects
-                    if(controller.getProjectStatus(i)) {
-                        System.out.println((counterScreen)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
-                    } else{
-                        option ++; //skip option to choose the position correct into array
-                        counterScreen --;
-                    }
-                }
-        
-                System.out.print(">> ");
-                option += input.nextInt();
-                input.nextLine();
-
+                option = showActiveProjects(lastProjectPosition);
             }
         }
 
         return option; 
+    }
+
+    public int showActiveProjects(int lastProjectPosition) {
+        int option = 0;
+        int counterInvalidOptions = 0; //Cosas raras
+        int[] discardedOptions = new int[(lastProjectPosition+1)];     
+
+        //Validate option
+        do{ 
+            System.out.println("\nDe que proyecto desea culminar la etapa\n");
+
+            for(int i = 0 ; i <= lastProjectPosition ; i++) {
+                
+                // if there are actives projects
+                if(controller.getProjectStatus(i)) {
+                    System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
+                } else {
+                    counterInvalidOptions ++; //Cosas raras
+                    discardedOptions[counterInvalidOptions] = i;
+                }
+            }
+    
+            System.out.print(">> ");
+            option = input.nextInt();
+            input.nextLine();
+            
+            //if    option is out of projects              or       option is a inactive project
+            if((option < 1 || option > lastProjectPosition+1) || ((controller.isInArray(option, discardedOptions)))) {
+                System.out.println("Opción incorrecta. ");
+            }
+
+            //while    option is out of projects              or       option is a inactive project
+        }while((option < 1 || option > lastProjectPosition+1) || ((controller.isInArray(option, discardedOptions))));
+        
+        return option;
     }
 
     public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) {
