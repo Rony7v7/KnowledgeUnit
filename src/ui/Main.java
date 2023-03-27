@@ -143,13 +143,25 @@ class Main{
     }
 
     public void closeStage() {
-        int projectPos = listActivesProjectsToChoose()-1;
+        int projectPos = 0;
+        int lastProjectPosition = controller.projectsIsEmpty();
+
+        if(lastProjectPosition != -1) {
+            projectPos = showActiveProjects(lastProjectPosition)-1;
+        }
+
+        // if option exists validation = current status of the project. ELSE validation is False
         boolean validation = (projectPos >= 0) ? controller.closeStageProject(projectPos):false;
         
+        //if project is still active
         if(validation) {
             System.out.println("\nEtapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
+          
+        //if project is ending 
         } else if(projectPos != -1){
             System.out.println("\nUltima etapa culminada con éxito, proyecto finalizado.");
+
+        //if project is ended
         } else{
             System.out.println("\nNo hay proyectos activos.");
         }
@@ -175,18 +187,6 @@ class Main{
             input.nextLine();
         }
         return MonthsPerStage;
-    }
-
-    public int listActivesProjectsToChoose() { //VALIDAR
-        int option = 0;
-        int lastProjectPosition = controller.projectsIsEmpty();
-        
-        //if there are projects
-        if(lastProjectPosition != -1) {
-            option = showActiveProjects(lastProjectPosition);
-        }
-
-        return option; 
     }
 
     public int showActiveProjects(int lastProjectPosition) {

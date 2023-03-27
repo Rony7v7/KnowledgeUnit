@@ -156,8 +156,8 @@ public class Project {
     
     //Aux
     public boolean closeStage() {
-        boolean isSwitched = false;
-        for(int i = 0; i < stages.length && !isSwitched ; i++) {
+        boolean stillActive = false;
+        for(int i = 0; i < stages.length && !stillActive ; i++) {
             //  if there is a stage active and if is not the last one
             if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
                 stages[i].setActive(false); //End Stage
@@ -166,14 +166,17 @@ public class Project {
                 stages[i+1].setActive(true); //Start next Stage
                 stages[i+1].setStartDate(Calendar.getInstance()); // Assign starting date
 
-                isSwitched = true; //Stop iteration
+                stillActive = true; //Stop iteration
 
             // else if the stage is the last one and the project is active
             } else if(i == stages.length-1 && getStatus()) {
+                stages[i].setActive(false); // end the last stage
+                stages[i].setEndDate(Calendar.getInstance()); //Assign ending date
+
                 setActive(false); //Project is inactivated
                 setEndDate(Calendar.getInstance()); //Set project ending date
             }
         }
-        return isSwitched;
+        return stillActive;
     }
 }
