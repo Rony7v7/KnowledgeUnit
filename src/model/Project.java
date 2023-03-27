@@ -138,17 +138,22 @@ public class Project {
         return managers;
     }
 
+    //Aux
     public boolean closeStage() {
         boolean isSwitched = false;
         for(int i = 0; i < stages.length && !isSwitched ; i++) {
             //  Get stage active and verify if is not the last one
             if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
-                stages[i].setActive(false);
-                stages[i+1].setActive(true);
-                isSwitched = true;
+                stages[i].setActive(false); //End Stage
+                stages[i].setEndDate(Calendar.getInstance()); //Assign ending date
+
+                stages[i+1].setActive(true); //Start next Stage
+                stages[i+1].setStartDate(Calendar.getInstance()); // Assign starting date
+
+                isSwitched = true; //Stop iteration
 
             } else if(i == stages.length-1) {
-                setActive(false);
+                setActive(false); //Project is inactivated
             }
         }
         return isSwitched;
