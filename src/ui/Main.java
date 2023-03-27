@@ -183,10 +183,7 @@ class Main{
         
         //if there are projects
         if(lastProjectPosition != -1) {
-            //if there are not active projects
-            if(lastProjectPosition+1 != controller.countInactiveProjects()) {
-                option = showActiveProjects(lastProjectPosition);
-            }
+            option = showActiveProjects(lastProjectPosition);
         }
 
         return option; 
@@ -194,35 +191,33 @@ class Main{
 
     public int showActiveProjects(int lastProjectPosition) {
         int option = 0;
-        int counterInvalidOptions = 0; //Cosas raras
-        int[] discardedOptions = new int[(lastProjectPosition+1)];     
 
         //Validate option
         do{ 
             System.out.println("\nDe que proyecto desea culminar la etapa\n");
 
             for(int i = 0 ; i <= lastProjectPosition ; i++) {
-                
-                // if there are actives projects
+                System.out.print((i+1)+". "+controller.getProjectNames()[i]);
+                // if the project is active
                 if(controller.getProjectStatus(i)) {
-                    System.out.println((i+1)+". "+controller.getProjectNames()[i]+" |  Etapa activa: "+controller.getStageActive(i));
-                } else {
-                    counterInvalidOptions ++; //Cosas raras
-                    discardedOptions[counterInvalidOptions] = i;
+                    System.out.println(" |  Etapa activa: "+controller.getStageActive(i));
+                } else{
+                    System.out.println(" | PROYECTO CULMINADO | Fecha de culminación: "+controller.getProjectEndDate(i));
                 }
+
             }
     
             System.out.print(">> ");
             option = input.nextInt();
             input.nextLine();
             
-            //if    option is out of projects              or       option is a inactive project
-            if((option < 1 || option > lastProjectPosition+1) || ((controller.isInArray(option, discardedOptions)))) {
+            //if    option is out of projects
+            if(option < 1 || option > lastProjectPosition+1) {
                 System.out.println("Opción incorrecta. ");
             }
 
-            //while    option is out of projects              or       option is a inactive project
-        }while((option < 1 || option > lastProjectPosition+1) || ((controller.isInArray(option, discardedOptions))));
+            //while    option is out of projects
+        }while(option < 1 || option > lastProjectPosition+1);
         
         return option;
     }

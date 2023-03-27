@@ -8,6 +8,7 @@ public class Project {
     private String name;
     private Calendar startPlannedDate; //Fechas reales ?
     private Calendar endPlannedDate;
+    private Calendar endDate;
     private double budget;
     private String[] clientData;
 
@@ -90,6 +91,10 @@ public class Project {
         }
     }
 
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
+
     public void setClientData(String[] clientData) {
         this.clientData = clientData;
     }
@@ -108,6 +113,10 @@ public class Project {
 
     public Calendar getEndPlannedDate() {
         return endPlannedDate;
+    }
+
+    public Calendar getEndDate() {
+        return endDate;
     }
 
     public double getBudget() {
@@ -144,11 +153,12 @@ public class Project {
         }
         return stageName;
     }
+    
     //Aux
     public boolean closeStage() {
         boolean isSwitched = false;
         for(int i = 0; i < stages.length && !isSwitched ; i++) {
-            //  Get stage active and verify if is not the last one
+            //  if there is a stage active and if is not the last one
             if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
                 stages[i].setActive(false); //End Stage
                 stages[i].setEndDate(Calendar.getInstance()); //Assign ending date
@@ -158,8 +168,10 @@ public class Project {
 
                 isSwitched = true; //Stop iteration
 
-            } else if(i == stages.length-1) {
+            // else if the stage is the last one and the project is active
+            } else if(i == stages.length-1 && getStatus()) {
                 setActive(false); //Project is inactivated
+                setEndDate(Calendar.getInstance()); //Set project ending date
             }
         }
         return isSwitched;

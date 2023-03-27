@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Calendar; //??? SE DEBE IMPORTAR OTRA VEZ? O DONDE SE IMPORTA POR SOLO UNA VEZ
+import java.text.SimpleDateFormat;
 
 public class GreenSQA {
     private static final int SIZE = 10;
@@ -81,7 +82,7 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-    public int countInactiveProjects() {
+    public int countInactiveProjects() { //innecesario
         int amountInactiveProjects = 0;
         int amountProjects = projectsIsEmpty()+1;
 
@@ -124,6 +125,13 @@ public class GreenSQA {
 
     public boolean getProjectStatus(int projectPosition) {
         return projects[projectPosition].getStatus();
+    }
+
+    public String getProjectEndDate(int projectPosition) {
+        Calendar endDate = projects[projectPosition].getEndDate();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        
+        return format.format(endDate.getTime());
     }
 
     //Stages
