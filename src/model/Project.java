@@ -90,15 +90,12 @@ public class Project {
         }
     }
 
+    public void setClientData(String[] clientData) {
+        this.clientData = clientData;
+    }
     //Getters
     public boolean getStatus() {
         return isActive;
-    }
-
-    public String[] getStageNames() {
-        String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
-                               stages[4].getName(),stages[5].getName()};
-        return stageNames;
     }
 
     public String getName() {
@@ -117,6 +114,24 @@ public class Project {
         return budget;
     }
 
+    public String[] getClientData() {
+        return clientData;
+    }
+
+    public Employee[] getCollaborators() {
+        return collaborators;
+    }
+
+    public Employee[] getManagers() {
+        return managers;
+    }
+
+    public String[] getStageNames() {
+        String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
+                               stages[4].getName(),stages[5].getName()};
+        return stageNames;
+    }
+
     public String getStageActive() {
         boolean isActive = false;
         String stageName = "";
@@ -129,15 +144,6 @@ public class Project {
         }
         return stageName;
     }
-
-    public Employee[] getCollaborators() {
-        return collaborators;
-    }
-
-    public Employee[] getManagers() {
-        return managers;
-    }
-
     //Aux
     public boolean closeStage() {
         boolean isSwitched = false;
