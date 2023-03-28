@@ -12,7 +12,7 @@ public class Stage {
     private Calendar endDate;
 
     private Capsule[] capsules = new Capsule[50];
-
+    
 
     public Stage(String name, boolean isActive) {
         this.name = name;

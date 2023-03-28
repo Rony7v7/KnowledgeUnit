@@ -144,7 +144,7 @@ class Main{
         
     }
 
-    public void closeStage() { //Se puede optimizar?
+    public void closeStage() {
         int projectPosToClose = 0;
 
         String msgValidation;

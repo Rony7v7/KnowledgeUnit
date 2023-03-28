@@ -103,7 +103,6 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-
     public boolean isInArray(int element, int[] array) { //Sigue iterando despues de encontrarlo
         //For each
         boolean isInArray = false;
