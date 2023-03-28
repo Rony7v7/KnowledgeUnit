@@ -88,86 +88,83 @@ class Main{
     }
 
     public void initProject() {
-        if(controller.projectsIsEmpty() != controller.getProjectsSIZE()-1) { //Max position into projects array
-            int[] managersPosition;
-            int amountManagers;
-            String[] clientData = new String[2];
+        int[] managersPosition;
+        int amountManagers;
+        String[] clientData = new String[2];
 
-            String name;
-            double budget;
+        String name;
+        double budget;
 
-            System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
-                             "Nombre del proyecto: ");
-            name = input.nextLine();
+        System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
+                         "Nombre del proyecto: ");
+        name = input.nextLine();
             
+        do{
             System.out.print("\n- Participantes del proyecto\n\nNumero de gerentes (3 max.) : ");
 
             //input Project Managers
             amountManagers = input.nextInt();
             input.nextLine();
-            amountManagers -= (amountManagers > 3) ? amountManagers%3:0; // if amountManagers > 3 Reduce to the max amount of Managers
 
-            managersPosition = new int[amountManagers];
+        if(amountManagers < 1 || amountManagers > 3){
+            System.out.println("\nIngresa una cantidad válida.");
+        }
 
-            for(int i = 0; i < amountManagers; i++) {
-                managersPosition[i] = inputEmployees("Gerente", 
-                                                     controller.getManagerNames(),
-                                                     controller.getManagerNames().length); //Managers Amount
-            }
-
-            //Input Project Client
-            System.out.print("\nNombre del cliente: ");
-            clientData[0] = input.nextLine();
-            System.out.print("\nNúmero de telefono: ");
-            clientData[1] = input.nextLine();
+        }while(amountManagers < 1 || amountManagers > 3);
             
-            System.out.print("\n- Presupuesto del proyecto: ");
-            budget = input.nextDouble();
-            input.nextLine();
+        managersPosition = new int[amountManagers];
+
+        for(int i = 0; i < amountManagers; i++) {
+            managersPosition[i] = inputEmployees("Gerente", 
+                                                controller.getManagerNames(),
+                                                controller.getManagerNames().length); //Managers Amount
+        }
+
+        //Input Project Client
+        System.out.print("\nNombre del cliente: ");
+        clientData[0] = input.nextLine();
+        System.out.print("\nNúmero de telefono: ");
+        clientData[1] = input.nextLine();
+         
+        System.out.print("\n- Presupuesto del proyecto: ");
+        budget = input.nextDouble();
+        input.nextLine();
 
             //Constructor
-            controller.addProject(name, 0, budget, managersPosition, clientData);
+        controller.addProject(name, 0, budget, managersPosition, clientData);
 
-            System.out.println("\n- Duración del proyecto\n");
+        System.out.println("\n- Duración del proyecto\n");
             // Setted duration in months per stage of created project
-            controller.setRecentProjectDurationAndDates(inputStagesDuration());  
+        controller.setRecentProjectDurationAndDates(inputStagesDuration());  
 
-            System.out.println("\nPROYECTO CREADO CON EXITO.");
+        System.out.println("\nPROYECTO CREADO CON EXITO.");
             
-        } else {
-            System.out.println("\nCAPACIDAD MAXIMA DE PROYECTOS.");
-        }
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
         
     }
 
-    public void closeStage() {
-        int projectPos = 0;
+    public void closeStage() { //Se puede optimizar?
+        int projectPosToClose = 0;
+
+        String msgValidation;
+
         int lastProjectPosition = controller.projectsIsEmpty();
 
+        // 1. if there are projects
         if(lastProjectPosition != -1) {
-            projectPos = showActiveProjects(lastProjectPosition)-1;
-        }
+            projectPosToClose = showActiveProjects(lastProjectPosition)-1;
+            msgValidation = controller.closeStageProject(projectPosToClose);
 
-        // if option exists validation = current status of the project. ELSE validation is False
-        boolean validation = (projectPos >= 0) ? controller.closeStageProject(projectPos):false;
-        
-        //if project is still active
-        if(validation) {
-            System.out.println("\nEtapa culminada con éxito, nueva etapa: "+controller.getStageActive(projectPos));
-          
-        //if project is ending 
-        } else if(projectPos != -1){
-            System.out.println("\nUltima etapa culminada con éxito, proyecto finalizado.");
-
-        //if project is ended
-        } else{
-            System.out.println("\nNo hay proyectos activos.");
+            System.out.println(msgValidation);
         }
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
+    }
+
+    public void registerCapsule() {
+
     }
 
     //-------------Aux Methods -----------
@@ -192,7 +189,6 @@ class Main{
     public int showActiveProjects(int lastProjectPosition) {
         int option = 0;
 
-        //Validate option
         do{ 
             System.out.println("\nDe que proyecto desea culminar la etapa\n");
 
@@ -204,7 +200,6 @@ class Main{
                 } else{
                     System.out.println(" | PROYECTO CULMINADO | Fecha de culminación: "+controller.getProjectEndDate(i));
                 }
-
             }
     
             System.out.print(">> ");
@@ -225,14 +220,21 @@ class Main{
     public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) {
         int option = 0;
 
-        System.out.println("\nSelecciona el "+employeeRole+" :\n");
-        
-        for(int i = 0; i < amountEmployees; i++) {
-            System.out.println((i+1)+". "+employeeNames[i]);
-        }
-        System.out.print(">> ");
-        option = input.nextInt();
-        input.nextLine();
+        do{
+            System.out.println("\nSelecciona el "+employeeRole+" :\n");
+            
+            for(int i = 0; i < amountEmployees; i++) {
+                System.out.println((i+1)+". "+employeeNames[i]);
+            }
+            System.out.print(">> ");
+            option = input.nextInt();
+            input.nextLine();
+
+            if(option < 1 || option > amountEmployees){
+                System.out.println("\nOpción inválida.");
+            }
+
+        }while(option < 1 || option > amountEmployees);
 
         return option-1;
     }

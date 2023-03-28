@@ -8,8 +8,10 @@ public class Stage {
     private int durationInMonths; // dudo
     private Calendar startPlannedDate;
     private Calendar endPlannedDate;
-    private Calendar startDate; // setear
+    private Calendar startDate;
     private Calendar endDate;
+
+    private Capsule[] capsules = new Capsule[50];
 
 
     public Stage(String name, boolean isActive) {
@@ -56,7 +58,7 @@ public class Stage {
         return durationInMonths;
     }
 
-    public boolean getIsActive() {
+    public boolean getStatus() {
         return isActive;
     }
 

@@ -3,9 +3,7 @@ package model;
 public class Employee {
     private String name;
     private String role;
-    private String phoneManager;
-
-    //private Capsule[] capsules = new Capsule[50]; 
+    private String phoneManager; 
 
     public Employee(String name, String role) {
         this.name = name;

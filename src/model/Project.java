@@ -135,6 +135,10 @@ public class Project {
         return managers;
     }
 
+    public Stage[] getStages() {
+        return stages;
+    }
+
     public String[] getStageNames() {
         String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
                                stages[4].getName(),stages[5].getName()};
@@ -146,7 +150,7 @@ public class Project {
         String stageName = "";
 
         for(int i = 0; i < stages.length && !isActive ; i++) {
-            if(stages[i].getIsActive()) {
+            if(stages[i].getStatus()) {
                 stageName = stages[i].getName();
                 isActive = true;
             }
@@ -160,11 +164,13 @@ public class Project {
         for(int i = 0; i < stages.length && !stillActive ; i++) {
             //  if there is a stage active and if is not the last one
             if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
+                Calendar currentDate = Calendar.getInstance();
+
                 stages[i].setActive(false); //End Stage
-                stages[i].setEndDate(Calendar.getInstance()); //Assign ending date
+                stages[i].setEndDate(currentDate); //Assign ending date
 
                 stages[i+1].setActive(true); //Start next Stage
-                stages[i+1].setStartDate(Calendar.getInstance()); // Assign starting date
+                stages[i+1].setStartDate(currentDate); // Assign starting date
 
                 stillActive = true; //Stop iteration
 

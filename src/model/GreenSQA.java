@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Calendar; //??? SE DEBE IMPORTAR OTRA VEZ? O DONDE SE IMPORTA POR SOLO UNA VEZ
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public class GreenSQA {
@@ -14,29 +14,50 @@ public class GreenSQA {
         //Constructor
     }
 
-    public void addProject(String name, int durationInMonths, double budget, int[] managersPosition, String[] clientData) { 
-        Calendar startDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, durationInMonths);
+    public String addProject(String name, int durationInMonths, double budget, int[] managersPosition, String[] clientData) { 
+        String msg = "\nCAPACIDAD MAXIMA DE PROYECTOS.";
 
-        //Assigned managers choosed to managers into the proyect
-        Employee[] managersPerProject = new Employee[managersPosition.length];
+        if(projectsIsEmpty() != getProjectsSIZE()-1) {
 
-        for(int i = 0; i < managersPosition.length ; i++) {
-             managersPerProject[i] = managers[managersPosition[i]];
-        }
+            Calendar startDate = Calendar.getInstance();
+            Calendar endDate = Calendar.getInstance();
+            endDate.add(Calendar.MONTH, durationInMonths);
 
-        //Add project to the first valid position
-        for(int i = 0; i < SIZE ; i++) {
-            if ( projects[i] == null) {
-                projects[i] = new Project(name, startDate, endDate, budget, managersPerProject, clientData);
-                i = SIZE;
+            //Assigned managers choosed to managers into the proyect
+            Employee[] managersPerProject = new Employee[managersPosition.length];
+
+            for(int i = 0; i < managersPosition.length ; i++) {
+                managersPerProject[i] = managers[managersPosition[i]];
             }
-        }
+
+            //Add project to the first valid position
+            for(int i = 0; i < SIZE ; i++) {
+                if ( projects[i] == null) {
+                    projects[i] = new Project(name, startDate, endDate, budget, managersPerProject, clientData);
+                    i = SIZE;
+                }
+            }
+
+            msg = "\nPROYECTO CREADO CON EXITO.";
+        } 
+
+        return msg;        
     }
 
-    public boolean closeStageProject(int projectPosition) {
-        return projects[projectPosition].closeStage();
+    public String closeStageProject(int projectPosition) {
+        String msg = "No hay proyectos activos";
+        int lastProjectPosition = projectsIsEmpty();
+
+        if(lastProjectPosition != -1) {
+
+            if(projects[projectPosition].closeStage()) {
+                msg =  "\nEtapa culminada con éxito, nueva etapa: "+getStageActive(projectPosition);
+            }else{
+                msg = "\nUltima etapa culminada con éxito, proyecto finalizado.";
+            }
+        }
+        
+        return msg;
     }
 
     public void registerCapsule() {
@@ -82,18 +103,6 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-    // public int countInactiveProjects() { //innecesario
-    //     int amountInactiveProjects = 0;
-    //     int amountProjects = projectsIsEmpty()+1;
-
-    //     for(int i = 0; i < amountProjects; i++) {
-    //         if(!projects[i].getStatus()) {
-    //             amountInactiveProjects++;
-    //         }
-    //     }
-
-    //     return amountInactiveProjects;
-    // }
 
     public boolean isInArray(int element, int[] array) { //Sigue iterando despues de encontrarlo
         //For each
@@ -135,7 +144,7 @@ public class GreenSQA {
     }
 
     //Stages
-    public String[] getStageNames() { //Se puede simplificar?
+    public String[] getStageNames() {
         return projects[0].getStageNames();
     }
 
@@ -155,9 +164,6 @@ public class GreenSQA {
     }
 
     //---------  Setters  ---------
-    // public void setRecentProjectName(String name) {
-    //     projects[(projectsIsEmpty())].setName(name);
-    // }
 
     public void setRecentProjectDurationAndDates(int[] monthsPerStage) {
         int totalMonthsProject = 0;
@@ -190,9 +196,5 @@ public class GreenSQA {
 
 
     }
-
-    // public void setRecentProjectBudget(double budget) {
-    //    projects[projectsIsEmpty()].setBudget(budget); 
-    // }
 
 }
