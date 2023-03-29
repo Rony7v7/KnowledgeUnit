@@ -37,7 +37,9 @@ public class Project {
     }
 
 
-    //Setters
+    //--------- Setters ----------
+
+    //Project
     public void setActive(boolean isActive) {
         this.isActive = isActive;
     }
@@ -58,6 +60,16 @@ public class Project {
         this.budget = budget;
     }
 
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setClientData(String[] clientData) {
+        this.clientData = clientData;
+    }
+    
+
+    //Stages
     public void setMonthsPerStage(int stagePosition, int durationInMonths) {
         boolean setted = false;
 
@@ -91,15 +103,9 @@ public class Project {
         }
     }
 
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
+    //---------- Getters -----------
 
-    public void setClientData(String[] clientData) {
-        this.clientData = clientData;
-    }
-    
-    //Getters
+    //Project
     public boolean getStatus() {
         return isActive;
     }
@@ -136,6 +142,7 @@ public class Project {
         return managers;
     }
 
+    //Stages
     public String[] getStageNames() {
         String[] stageNames = {stages[0].getName(), stages[1].getName(), stages[2].getName(), stages[3].getName(),
                                stages[4].getName(),stages[5].getName()};
@@ -155,7 +162,12 @@ public class Project {
         return stageName;
     }
     
-    //Aux
+    //Capsules
+    public String[] getCapsuleTypes() {
+        return stages[0].getCapsuleTypes();
+    }
+
+    //AUX
     public boolean closeStage() {
         boolean stillActive = false;
         for(int i = 0; i < stages.length && !stillActive ; i++) {
@@ -182,4 +194,18 @@ public class Project {
         }
         return stillActive;
     }
+
+    public String registerCapsule(String description, int type, String lesson, String content) {
+        String msg = "\nNo hay etapas activas";
+        
+        for(int i = 0; i < stages.length ; i++) {
+            if(stages[i].getStatus()) {
+                msg = stages[i].addCapsule(description, type, lesson, content);
+            }
+        }
+        
+        return msg;
+    }
+
+
 }

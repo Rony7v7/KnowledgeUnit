@@ -66,7 +66,7 @@ class Main{
                 break;
             case 2: closeStage();
                 break;
-            case 3:
+            case 3: registerCapsule();
                 break;
             case 4:
                 break;
@@ -88,12 +88,15 @@ class Main{
     }
 
     public void initProject() {
-        int[] managersPosition;
-        int amountManagers;
-        String[] clientData = new String[2];
-
+        
         String name;
         double budget;
+        int[] monthsPerStage;
+        int amountManagers;
+        int[] managersPosition;
+        String[] clientData = new String[2];
+
+        String msgValidation;
 
         System.out.print("-------- CREACIÓN DE PROYECTO ---------\n\n"+
                          "Nombre del proyecto: ");
@@ -101,14 +104,12 @@ class Main{
             
         do{
             System.out.print("\n- Participantes del proyecto\n\nNumero de gerentes (3 max.) : ");
-
-            //input Project Managers
             amountManagers = input.nextInt();
             input.nextLine();
 
-        if(amountManagers < 1 || amountManagers > 3){
-            System.out.println("\nIngresa una cantidad válida.");
-        }
+            if(amountManagers < 1 || amountManagers > 3){
+                System.out.println("\nIngresa una cantidad válida.");
+            }
 
         }while(amountManagers < 1 || amountManagers > 3);
             
@@ -125,20 +126,20 @@ class Main{
         clientData[0] = input.nextLine();
         System.out.print("\nNúmero de telefono: ");
         clientData[1] = input.nextLine();
-         
+        
+        //Input Budget
         System.out.print("\n- Presupuesto del proyecto: ");
         budget = input.nextDouble();
         input.nextLine();
 
-            //Constructor
-        controller.addProject(name, 0, budget, managersPosition, clientData);
-
+        //Input duration in months
         System.out.println("\n- Duración del proyecto\n");
-            // Setted duration in months per stage of created project
-        controller.setRecentProjectDurationAndDates(inputStagesDuration());  
+        monthsPerStage = inputStagesDuration();
 
-        System.out.println("\nPROYECTO CREADO CON EXITO.");
-            
+        msgValidation = controller.addProject(name, budget, monthsPerStage, managersPosition, clientData);
+
+        System.out.println(msgValidation);
+
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
         
@@ -149,21 +150,75 @@ class Main{
         String msgValidation;
         int lastProjectPosition = controller.projectsIsEmpty();
 
-        System.out.println("-------- CULMINACION DE ETAPAS ---------\n\n");
+        System.out.println("-------- CULMINACION DE ETAPAS ---------");
         // 1. if there are projects
         if(lastProjectPosition != -1) {
-            projectPosToClose = showActiveProjects(lastProjectPosition)-1;
+            projectPosToClose = showProjects(lastProjectPosition)-1;
             msgValidation = controller.closeStageProject(projectPosToClose);
 
             System.out.println(msgValidation);
+        } else {
+            System.out.println("\nNo hay proyectos registrados.");
         }
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
     }
 
-    public void registerCapsule() {
+    public void registerCapsule() { // EL SISTEMA REGISTRA CAPSULAS A LA ETAPA ACTIVA
+        int lastProjectPosition = controller.projectsIsEmpty();
+        int projectPosToRegister;
 
+        String description;
+        String[] capsuleTypes;
+        int capsuleType;
+        String lesson;
+        String content;
+        
+        System.out.println("-------- REGISTRO DE CAPSULAS ---------");
+
+        if(lastProjectPosition != -1) {
+            projectPosToRegister = showProjects(lastProjectPosition)-1;
+
+            System.out.print("Contexto de la situación a registrar:  ");
+            description = input.nextLine();
+
+            //PreCreate capsule to access the capsule types
+            controller.registerCapsule(10, null, 0, null, null);
+            
+            capsuleTypes = controller.getCapsuleTypes();
+
+            do{
+                System.out.println("\nTipo de capsula: ");
+
+                for(int i = 0 ; i < capsuleTypes.length ; i++ ) {
+                    System.out.println((i+1)+". "+capsuleTypes[i]);
+                }
+                
+                System.out.print("\n>> ");
+                capsuleType = input.nextInt();
+                input.nextLine();
+
+                if(capsuleType < 1 || capsuleType > capsuleTypes.length) {
+                    cleanScreen();
+                    System.out.println("\nOpción incorrecta");
+                }
+
+            }while(capsuleType < 1 || capsuleType > capsuleTypes.length);
+
+            System.out.print("\nLección aprendida: ");
+            lesson = input.nextLine();
+
+            System.out.println("\nContenido de la capsula\n- ");
+            content = input.nextLine();
+
+            controller.registerCapsule(projectPosToRegister,description, capsuleType-1, lesson, content);
+        } else {
+            System.out.println("\nNo hay proyectos registrados.");
+        }
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
     }
 
     //-------------Aux Methods -----------
@@ -175,9 +230,9 @@ class Main{
 
     public int[] inputStagesDuration( ) {
         String[] stageNames = controller.getStageNames();
-        int[] MonthsPerStage = new int[6];
+        int[] MonthsPerStage = new int[stageNames.length];
 
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < stageNames.length; i++) {
             System.out.print("Ingresa la duración en meses de la etapa "+stageNames[i]+" : ");
             MonthsPerStage[i] = input.nextInt();
             input.nextLine();
@@ -185,7 +240,7 @@ class Main{
         return MonthsPerStage;
     }
 
-    public int showActiveProjects(int lastProjectPosition) {
+    public int showProjects(int lastProjectPosition) {
         int option = 0;
 
         do{ 
@@ -207,11 +262,17 @@ class Main{
             
             //if    option is out of projects
             if(option < 1 || option > lastProjectPosition+1) {
-                System.out.println("Opción incorrecta. ");
+                cleanScreen();
+                System.out.println("\nOpción incorrecta. ");
             }
 
             //while    option is out of projects
         }while(option < 1 || option > lastProjectPosition+1);
+
+        // if option is a ended project, is out because other methods need choose projects actives or inactives.
+        if(!controller.getProjectStatus(option-1)) {
+            option = 0;
+        }
         
         return option;
     }

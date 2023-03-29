@@ -4,8 +4,9 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public class GreenSQA {
-    private static final int SIZE = 10;
+    private static final int SIZE = 11; //10 + 1 project that is pre-created to access its stage names in Main 
     private Project[] projects = new Project[SIZE];
+
     private Employee[] managers = {new Employee("GERENTE 1", "MANAGER"),
                                    new Employee("GERENTE 2", "MANAGER"),
                                    new Employee("GERENTE 3", "MANAGER")};
@@ -14,29 +15,42 @@ public class GreenSQA {
         //Constructor
     }
 
-    public String addProject(String name, int durationInMonths, double budget, int[] managersPosition, String[] clientData) { 
+    public String addProject(String name, double budget,int[] monthsPerStage ,int[] managersPosition, String[] clientData) { 
         String msg = "\nCAPACIDAD MAXIMA DE PROYECTOS.";
 
-        if(projectsIsEmpty() != getProjectsSIZE()-1) {
+        int totalMonthsProject = 0;
+        int projectPos = projectsIsEmpty()+1;
 
-            Calendar startDate = Calendar.getInstance();
-            Calendar endDate = Calendar.getInstance();
-            endDate.add(Calendar.MONTH, durationInMonths);
+        Calendar projectPlannedEndDate = Calendar.getInstance();
+        Calendar stagePlannedStartDate = Calendar.getInstance();
+        Calendar stagePlannedEndDate = Calendar.getInstance();
 
-            //Assigned managers choosed to managers into the proyect
-            Employee[] managersPerProject = new Employee[managersPosition.length];
+        //Create to model project to access the project stages in Main class
 
-            for(int i = 0; i < managersPosition.length ; i++) {
-                managersPerProject[i] = managers[managersPosition[i]];
+        if(projectPos < projects.length-1) {
+
+            projects[projectPos] = new Project(name, stagePlannedStartDate, stagePlannedEndDate, budget, managers, clientData);
+
+            //Set duration in months per Stage and planned start - end dates
+            for(int i = 0; i < monthsPerStage.length ; i++) {
+
+                totalMonthsProject += monthsPerStage[i];
+
+                //Set Start planned date
+                stagePlannedStartDate.add(Calendar.MONTH, totalMonthsProject);
+                projects[projectPos].setStartPlannedDate(stagePlannedEndDate);
+
+                //Set End planned date
+                stagePlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
+                projects[projectPos].setEndPlannedDate(stagePlannedEndDate);
+                
+                //Set months
+                projects[projectPos].setMonthsPerStage(i, monthsPerStage[i]); 
             }
-
-            //Add project to the first valid position
-            for(int i = 0; i < SIZE ; i++) {
-                if ( projects[i] == null) {
-                    projects[i] = new Project(name, startDate, endDate, budget, managersPerProject, clientData);
-                    i = SIZE;
-                }
-            }
+            
+            //Set end planned date of project 
+            projectPlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
+            projects[projectPos].setEndPlannedDate(projectPlannedEndDate);
 
             msg = "\nPROYECTO CREADO CON EXITO.";
         } 
@@ -46,22 +60,25 @@ public class GreenSQA {
 
     public String closeStageProject(int projectPosition) {
         String msg = "No hay proyectos activos";
-        int lastProjectPosition = projectsIsEmpty();
 
-        if(lastProjectPosition != -1) {
+        if(projectPosition != -1) {
 
             if(projects[projectPosition].closeStage()) {
                 msg =  "\nEtapa culminada con éxito, nueva etapa: "+getStageActive(projectPosition);
             }else{
                 msg = "\nUltima etapa culminada con éxito, proyecto finalizado.";
             }
+
+        }else {
+            msg = "\nProyecto ya culminado anteriormente.";
         }
         
         return msg;
     }
 
-    public void registerCapsule() {
-        
+    public String registerCapsule(int projectPosition, String description, int type, String lesson, String content) {
+        String msg = projects[projectPosition].registerCapsule(description, type, lesson, content);
+        return msg;
     }
 
     public void approveCapsule() {
@@ -103,16 +120,6 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-    // public boolean isInArray(int element, int[] array) {
-    //     boolean isInArray = false;
-    //     for(int i = 0; i < array.length && !isInArray ; i++ ) {
-    //         if(array[i] == element) {
-    //             isInArray = true;
-    //         }
-    //     }
-
-    //     return isInArray;
-    // }
 
     //---------  Getters  ----------
 
@@ -143,8 +150,9 @@ public class GreenSQA {
     }
 
     //Stages
-    public String[] getStageNames() {
-        return projects[0].getStageNames();
+    public String[] getStageNames() { // Hacer lo mismo pero con las capsulas
+        projects[10] = new Project(null, null, null, 0.0, null, null);
+        return projects[10].getStageNames();
     }
 
     public String getStageActive(int projectPosition) {
@@ -162,38 +170,17 @@ public class GreenSQA {
         return managerNames;
     }
 
+    public String[] getCollaboratorNames() {
+        String[] managerNames = new String[managers.length];
+        return managerNames;
+    }
+
+    //Capsules
+    public String[] getCapsuleTypes() {
+        return projects[0].getCapsuleTypes();
+    }
+
     //---------  Setters  ---------
 
-    public void setRecentProjectDurationAndDates(int[] monthsPerStage) {
-        int totalMonthsProject = 0;
-        int projectPos = projectsIsEmpty();
-        Calendar projectPlannedEndDate = Calendar.getInstance();
-        Calendar stagePlannedStartDate = Calendar.getInstance();
-        Calendar stagePlannedEndDate = Calendar.getInstance();
-
-        //Set duration in months per Stage and planned start - end dates
-        for(int i = 0; i < monthsPerStage.length ; i++) {
-
-            totalMonthsProject += monthsPerStage[i];
-
-            //Set Start planned date
-            stagePlannedStartDate.add(Calendar.MONTH, totalMonthsProject);
-            projects[projectPos].setStartPlannedDate(stagePlannedEndDate);
-
-            //Set End planned date
-            stagePlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
-            projects[projectPos].setEndPlannedDate(stagePlannedEndDate);
-            
-            //Set months
-            projects[projectPos].setMonthsPerStage(i, monthsPerStage[i]); 
-
-        }
-        
-        //Set end planned date of project 
-        projectPlannedEndDate.add(Calendar.MONTH, totalMonthsProject);
-        projects[projectPos].setEndPlannedDate(projectPlannedEndDate);
-
-
-    }
 
 }
