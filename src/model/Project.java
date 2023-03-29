@@ -98,6 +98,7 @@ public class Project {
     public void setClientData(String[] clientData) {
         this.clientData = clientData;
     }
+    
     //Getters
     public boolean getStatus() {
         return isActive;
@@ -133,10 +134,6 @@ public class Project {
 
     public Employee[] getManagers() {
         return managers;
-    }
-
-    public Stage[] getStages() {
-        return stages;
     }
 
     public String[] getStageNames() {

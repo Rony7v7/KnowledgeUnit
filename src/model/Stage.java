@@ -5,14 +5,14 @@ import java.util.Calendar;
 public class Stage {
     private String name;
     private boolean isActive;
-    private int durationInMonths; // dudo
+    private int durationInMonths;
     private Calendar startPlannedDate;
     private Calendar endPlannedDate;
     private Calendar startDate;
     private Calendar endDate;
 
     private Capsule[] capsules = new Capsule[50];
-    
+
 
     public Stage(String name, boolean isActive) {
         this.name = name;

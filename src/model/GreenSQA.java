@@ -89,7 +89,7 @@ public class GreenSQA {
     }
     
     //Aux
-    public int projectsIsEmpty() { //NO SE SI SEA NECESARIA TOTALMENTE
+    public int projectsIsEmpty() {
         int lastFullPosition = -1;
         boolean isEmpty = false;
 
@@ -103,16 +103,16 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-    public boolean isInArray(int element, int[] array) { //Sigue iterando despues de encontrarlo
-        //For each
-        boolean isInArray = false;
-        for (int i : array) {
-            if (i == element) {
-                isInArray = true;
-            }
-        }
-        return isInArray;
-    }
+    // public boolean isInArray(int element, int[] array) {
+    //     boolean isInArray = false;
+    //     for(int i = 0; i < array.length && !isInArray ; i++ ) {
+    //         if(array[i] == element) {
+    //             isInArray = true;
+    //         }
+    //     }
+
+    //     return isInArray;
+    // }
 
     //---------  Getters  ----------
 
@@ -147,7 +147,7 @@ public class GreenSQA {
         return projects[0].getStageNames();
     }
 
-    public String getStageActive(int projectPosition) { //Lo de arriba
+    public String getStageActive(int projectPosition) {
         return projects[projectPosition].getStageActive();
     }
 

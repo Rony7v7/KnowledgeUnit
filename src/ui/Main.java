@@ -146,11 +146,10 @@ class Main{
 
     public void closeStage() {
         int projectPosToClose = 0;
-
         String msgValidation;
-
         int lastProjectPosition = controller.projectsIsEmpty();
 
+        System.out.println("-------- CULMINACION DE ETAPAS ---------\n\n");
         // 1. if there are projects
         if(lastProjectPosition != -1) {
             projectPosToClose = showActiveProjects(lastProjectPosition)-1;
@@ -190,7 +189,7 @@ class Main{
         int option = 0;
 
         do{ 
-            System.out.println("\nDe que proyecto desea culminar la etapa\n");
+            System.out.println("\nEn que proyecto desea ejecutar la acción\n");
 
             for(int i = 0 ; i <= lastProjectPosition ; i++) {
                 System.out.print((i+1)+". "+controller.getProjectNames()[i]);
