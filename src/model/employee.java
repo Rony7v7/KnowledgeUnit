@@ -5,15 +5,20 @@ public class Employee {
     private String role;
     private String phoneManager; 
 
+    private Capsule[] collabCapsules = new Capsule[50];
+    private int amountCapsules = 0;
+    private String[] capsuleTypes = {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
+
+
     public Employee(String name, String role) {
         this.name = name;
         this.role = role;
     }
 
-    public void setPhoneManager(String phoneManager) {
-        this.phoneManager = phoneManager;
-    }
 
+    //------- Getters -------
+
+    
     public String getPhoneManager() {
         return phoneManager;
     }
@@ -25,4 +30,27 @@ public class Employee {
     public String getRole() {
         return role;
     }
+
+    public int getAmountCapsules() {
+        return amountCapsules;
+    }
+
+    //-------- Setters -------
+    public void setPhoneManager(String phoneManager) {
+        this.phoneManager = phoneManager;
+    }
+
+
+    public void addCapsule(String id, String description, int typePos, String lesson, String content) {
+        String type = capsuleTypes[typePos];
+
+        if(amountCapsules < 50) {
+            collabCapsules[amountCapsules] = new Capsule(id, description, type, lesson, content);
+            amountCapsules ++;
+        }
+
+
+    }
+
+
 }

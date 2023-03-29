@@ -169,6 +169,7 @@ class Main{
         int lastProjectPosition = controller.projectsIsEmpty();
         int projectPosToRegister;
 
+        int collaboratorPos;
         String description;
         String[] capsuleTypes;
         int capsuleType;
@@ -180,11 +181,15 @@ class Main{
         if(lastProjectPosition != -1) {
             projectPosToRegister = showProjects(lastProjectPosition)-1;
 
+            collaboratorPos = inputEmployees("COLABORADOR",
+                                             controller.getCollaboratorNames(),
+                                             controller.getCollaboratorNames().length);
+
             System.out.print("Contexto de la situación a registrar:  ");
             description = input.nextLine();
 
             //PreCreate capsule to access the capsule types
-            controller.registerCapsule(10, null, 0, null, null);
+            controller.registerCapsule(-1, 10, null, 0, null, null);
             
             capsuleTypes = controller.getCapsuleTypes();
 
@@ -209,10 +214,10 @@ class Main{
             System.out.print("\nLección aprendida: ");
             lesson = input.nextLine();
 
-            System.out.println("\nContenido de la capsula\n- ");
+            System.out.print("\nContenido de la capsula\n- ");
             content = input.nextLine();
 
-            controller.registerCapsule(projectPosToRegister,description, capsuleType-1, lesson, content);
+            controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson, content);
         } else {
             System.out.println("\nNo hay proyectos registrados.");
         }
@@ -277,7 +282,7 @@ class Main{
         return option;
     }
 
-    public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) {
+    public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) { 
         int option = 0;
 
         do{

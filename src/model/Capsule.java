@@ -32,4 +32,8 @@ public class Capsule {
     public String getLesson() {
         return lesson;
     }
+
+    public String getContent() {
+        return content;
+    }
 }

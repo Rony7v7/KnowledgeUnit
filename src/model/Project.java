@@ -167,7 +167,18 @@ public class Project {
         return stages[0].getCapsuleTypes();
     }
 
-    //AUX
+    //Employee
+    public String[] getCollaboratorNames() {
+        String [] collaboratorNames = new String[collaborators.length];
+
+        for(int i = 0; i < collaborators.length ; i++) {
+            collaboratorNames[i] = collaborators[i].getName();
+        }
+
+        return collaboratorNames;
+    }
+
+    //--------- AUX
     public boolean closeStage() {
         boolean stillActive = false;
         for(int i = 0; i < stages.length && !stillActive ; i++) {
@@ -195,14 +206,33 @@ public class Project {
         return stillActive;
     }
 
-    public String registerCapsule(String description, int type, String lesson, String content) {
+    public String registerCapsule(int collaboratorPos, String description, int type, String lesson, String content) {
         String msg = "\nNo hay etapas activas";
+        Stage stageActive = stages[0];
+        String id;
+
+        boolean isFound = false;
         
-        for(int i = 0; i < stages.length ; i++) {
+        //Search stage active
+        for(int i = 0; i < stages.length && !isFound ; i++) {
             if(stages[i].getStatus()) {
-                msg = stages[i].addCapsule(description, type, lesson, content);
+                stageActive = stages[i] ;
+                isFound = true;
             }
         }
+
+        //Set id
+        id = "CC"+stageActive.getAmountCapsules();
+        msg = stageActive.addCapsule(id, description, type, lesson, content);
+
+        //Assign to employee
+        isFound = false;
+        for(int i = 0 ; i< collaborators.length && !isFound ; i++) {
+            if(i == collaboratorPos) {
+                collaborators[i].addCapsule(id, description, type, lesson, content);
+            }
+        }
+
         
         return msg;
     }

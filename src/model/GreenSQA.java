@@ -76,8 +76,8 @@ public class GreenSQA {
         return msg;
     }
 
-    public String registerCapsule(int projectPosition, String description, int type, String lesson, String content) {
-        String msg = projects[projectPosition].registerCapsule(description, type, lesson, content);
+    public String registerCapsule(int collaboratorPos, int projectPosition, String description, int type, String lesson, String content) {
+        String msg = projects[projectPosition].registerCapsule(collaboratorPos, description, type, lesson, content);
         return msg;
     }
 
@@ -171,8 +171,7 @@ public class GreenSQA {
     }
 
     public String[] getCollaboratorNames() {
-        String[] managerNames = new String[managers.length];
-        return managerNames;
+        return projects[10].getCollaboratorNames();
     }
 
     //Capsules
