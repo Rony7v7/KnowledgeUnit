@@ -3,6 +3,9 @@ package ui;
 import java.util.Scanner;
 import model.GreenSQA;
 
+/**
+ * author   Rony
+ */
 class Main{
 
     private Scanner input;
@@ -87,6 +90,13 @@ class Main{
         }
     }
 
+    /**
+     * initProject: Description
+     * @param projectName
+     * @param budget
+     * @param amounManagers
+     * @param managersPosition
+     */
     public void initProject() {
         
         String name;
@@ -165,7 +175,7 @@ class Main{
         input.nextLine();
     }
 
-    public void registerCapsule() { // EL SISTEMA REGISTRA CAPSULAS A LA ETAPA ACTIVA
+    public void registerCapsule() { // EL SISTEMA REGISTRA CAPSULAS A LA ETAPA ACTIVA || REGISTRAR #
         int lastProjectPosition = controller.projectsIsEmpty();
         int projectPosToRegister;
 
