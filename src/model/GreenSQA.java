@@ -76,8 +76,8 @@ public class GreenSQA {
         return msg;
     }
 
-    public String registerCapsule(int collaboratorPos, int projectPosition, String description, int type, String lesson, String content) {
-        String msg = projects[projectPosition].registerCapsule(collaboratorPos, description, type, lesson, content);
+    public String registerCapsule(int collaboratorPos, int projectPosition, String description, int type, String lesson) {
+        String msg = projects[projectPosition].registerCapsule(collaboratorPos, description, type, lesson);
         return msg;
     }
 

@@ -206,10 +206,11 @@ public class Project {
         return stillActive;
     }
 
-    public String registerCapsule(int collaboratorPos, String description, int type, String lesson, String content) {
+    public String registerCapsule(int collaboratorPos, String description, int type, String lesson) {
         Capsule capsule;
         Stage stageActive = stages[0];
         String id;
+        String typeName;
         String msg = "\nNo hay etapas activas";
 
         boolean isFound = false;
@@ -224,11 +225,13 @@ public class Project {
 
         //Set id
         id = "CC"+stageActive.getAmountCapsules();
+        //Set Type
+        typeName = getCapsuleTypes()[type];
+        //Create capsule
+        capsule = new Capsule(id, description, typeName, lesson);
 
-        capsule = new Capsule(id, description, msg, lesson, content);
+        //Assign capsule
         msg = stageActive.addCapsule(capsule);
-
-        //Assign to employee
         collaborators[collaboratorPos].addCapsule(capsule);
         
         return msg;

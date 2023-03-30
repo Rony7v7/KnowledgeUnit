@@ -163,6 +163,7 @@ class Main{
         int lastProjectPosition = controller.projectsIsEmpty();
 
         System.out.println("-------- CULMINACION DE ETAPAS ---------");
+
         // 1. if there are projects
         if(lastProjectPosition != -1) {
             projectPosToClose = showProjects(lastProjectPosition)-1;
@@ -201,7 +202,7 @@ class Main{
             description = input.nextLine();
 
             //PreCreate capsule to access the capsule types
-            controller.registerCapsule(-1, 10, null, 0, null, null);
+            controller.registerCapsule(-1, 10, null, 0, null);
             
             capsuleTypes = controller.getCapsuleTypes();
 
@@ -223,13 +224,10 @@ class Main{
 
             }while(capsuleType < 1 || capsuleType > capsuleTypes.length);
 
-            System.out.print("\nLección aprendida: ");
+            System.out.print("\nLección aprendida\n- ");
             lesson = input.nextLine();
 
-            System.out.print("\nContenido de la capsula\n- ");
-            content = input.nextLine();
-
-            controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson, content);
+            controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson);
         } else {
             System.out.println("\nNo hay proyectos registrados.");
         }

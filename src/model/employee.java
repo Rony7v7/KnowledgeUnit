@@ -40,7 +40,6 @@ public class Employee {
         this.phoneManager = phoneManager;
     }
 
-
     public void addCapsule(Capsule capsule) {
         if(amountCapsules < 50) {
             collabCapsules[amountCapsules] = capsule;
@@ -48,5 +47,6 @@ public class Employee {
         }
     }
 
+    
 
 }

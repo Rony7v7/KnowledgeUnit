@@ -5,14 +5,14 @@ public class Capsule {
     private String description;
     private String type;
     private String lesson;
-    private String content;
 
-    public Capsule(String id, String description, String type, String lesson, String content) {
+    private String[] hashtags;
+
+    public Capsule(String id, String description, String type, String lesson) {
         this.id = id;
         this.description = description;
         this.type = type;
         this.lesson = lesson;
-        this.content = content; // Es lo mismo u otra cosa?????????
     }
 
 
@@ -33,7 +33,7 @@ public class Capsule {
         return lesson;
     }
 
-    public String getContent() {
-        return content;
+    public String filterHasthtags() {
+        return "";
     }
 }
