@@ -88,13 +88,12 @@ public class Stage {
     }
 
     //AUX
-    public String addCapsule(String id, String description, int typePos, String lesson, String content) {
+    public String addCapsule(Capsule capsule) {
         String msg = "\nCapacidad máxima (50) alcanzada.";
-        String type = capsuleTypes[typePos];
 
         if(amountCapsules < 50) {
             amountCapsules ++;
-            capsules[amountCapsules] = new Capsule(id, description, type, lesson, content);
+            capsules[amountCapsules] = capsule;
             msg = "\nCapsula registrada con exito.";
         }
 

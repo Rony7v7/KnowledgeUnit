@@ -12,7 +12,7 @@ public class Capsule {
         this.description = description;
         this.type = type;
         this.lesson = lesson;
-        this.content = content;
+        this.content = content; // Es lo mismo u otra cosa?????????
     }
 
 

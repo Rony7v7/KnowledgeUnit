@@ -41,15 +41,11 @@ public class Employee {
     }
 
 
-    public void addCapsule(String id, String description, int typePos, String lesson, String content) {
-        String type = capsuleTypes[typePos];
-
+    public void addCapsule(Capsule capsule) {
         if(amountCapsules < 50) {
-            collabCapsules[amountCapsules] = new Capsule(id, description, type, lesson, content);
+            collabCapsules[amountCapsules] = capsule;
             amountCapsules ++;
         }
-
-
     }
 
 

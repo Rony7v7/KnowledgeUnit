@@ -6,11 +6,11 @@ public class Project {
     
     private boolean isActive = true;
     private String name;
-    private Calendar startPlannedDate; //Fechas reales ?
+    private Calendar startPlannedDate;
     private Calendar endPlannedDate;
     private Calendar endDate;
     private double budget;
-    private String[] clientData;
+    private String[] clientData; //Crear clase client?
 
     private Employee[] collaborators = {new Employee("COLABORADOR 1", "COLLABORATOR"),
                                         new Employee("COLABORADOR 2", "COLLABORATOR"),
@@ -18,7 +18,7 @@ public class Project {
                                         new Employee("COLABORADOR 4", "COLLABORATOR"),
                                         new Employee("COLABORADOR 5", "COLLABORATOR")};
 
-    private Employee[] managers;
+    private Employee[] managers; //Crear calse manager?
     
     private Stage[] stages = {new Stage("INICIO",true),
                               new Stage("ANALISIS",false), 
@@ -149,7 +149,7 @@ public class Project {
         return stageNames;
     }
 
-    public String getStageActive() {
+    public String getStageActive() { //stageActiveName
         boolean isActive = false;
         String stageName = "";
 
@@ -207,9 +207,10 @@ public class Project {
     }
 
     public String registerCapsule(int collaboratorPos, String description, int type, String lesson, String content) {
-        String msg = "\nNo hay etapas activas";
+        Capsule capsule;
         Stage stageActive = stages[0];
         String id;
+        String msg = "\nNo hay etapas activas";
 
         boolean isFound = false;
         
@@ -223,16 +224,12 @@ public class Project {
 
         //Set id
         id = "CC"+stageActive.getAmountCapsules();
-        msg = stageActive.addCapsule(id, description, type, lesson, content);
+
+        capsule = new Capsule(id, description, msg, lesson, content);
+        msg = stageActive.addCapsule(capsule);
 
         //Assign to employee
-        isFound = false;
-        for(int i = 0 ; i< collaborators.length && !isFound ; i++) {
-            if(i == collaboratorPos) {
-                collaborators[i].addCapsule(id, description, type, lesson, content);
-            }
-        }
-
+        collaborators[collaboratorPos].addCapsule(capsule);
         
         return msg;
     }

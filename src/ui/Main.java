@@ -4,7 +4,7 @@ import java.util.Scanner;
 import model.GreenSQA;
 
 /**
- * author   Rony
+ * @author  Rony
  */
 class Main{
 
@@ -91,11 +91,13 @@ class Main{
     }
 
     /**
-     * initProject: Description
+     * initProject: This method 
      * @param projectName
      * @param budget
      * @param amounManagers
      * @param managersPosition
+     * @param clientData[]
+     * @param collaborator
      */
     public void initProject() {
         
