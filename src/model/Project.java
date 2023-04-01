@@ -264,12 +264,12 @@ public class Project {
         //SET #'s 
         ArrayList <String> hashtags = assignHashtags(description,lesson);
     
-        if(hashtags.isEmpty()) {
-            msg = "\nRegistro fallido. \nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).";
+        if(hashtags.contains(null)) {
+            msg = "\nRegistro fallido.\nEn la descripción y en la lección deben haber palabras clave (Ejemplo #Pruebas Funcionales#).";
         } else {
             //Create capsule
             capsule = new Capsule(id, description, typeName, lesson, hashtags);
-            msg = stageActive.addCapsule(capsule);           
+            msg = stageActive.addCapsule(capsule);           //UPDATE
             collaborators[collaboratorPos].addCapsule(stageActive.getName()+(stageActive.getAmountCapsules()-1));
         }
         
@@ -286,6 +286,9 @@ public class Project {
         //Split the 2 texts
         for(int i = 0 ; i < texts.length ; i++ ) {
             textSplit = texts[i].split("#");
+            if(textSplit.length == 1) {
+                hashtags.add(null);
+            }
 
             //separate hashtags
             for(int j = 1 ; j < textSplit.length ; j += 2) {

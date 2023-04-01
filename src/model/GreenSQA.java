@@ -85,7 +85,7 @@ public class GreenSQA {
     }
 
     public String approveCapsule(int projectPos, int capsulePos) {
-        String msg ="\nNo hay capsulas registradas.";
+        String msg ="\nNo hay capsulas para revisar.";
         if(capsulePos != -1) {
             projects[projectPos].approveCapsule(capsulePos);
             msg = "\nCapsula Aprobada exitosamente.";
