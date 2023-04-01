@@ -231,18 +231,16 @@ public class Project {
         id = "CC"+stageActive.getAmountCapsules(); //IDs diferentes para cada estapa
         //Set Type
         typeName = getCapsuleTypes()[type];
-        //Create capsule
-        capsule = new Capsule(id, description, typeName, lesson);
+        
 
         //SET #'s 
-        ArrayList <String> hashtags = assignHashtags(capsule, description,lesson);
-        System.out.println(hashtags);
+        ArrayList <String> hashtags = assignHashtags(description,lesson);
     
         if(hashtags.isEmpty()) {
             msg = "\nRegistro fallido. \nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).";
         } else {
-            
-            capsule.setHashtags(hashtags);
+            //Create capsule
+            capsule = new Capsule(id, description, typeName, lesson, hashtags);
             msg = stageActive.addCapsule(capsule);
             collaborators[collaboratorPos].addCapsule(capsule);
         }
@@ -250,7 +248,7 @@ public class Project {
         return msg;
     }
 
-    public ArrayList<String> assignHashtags(Capsule capsule,String description, String lesson) {
+    public ArrayList<String> assignHashtags(String description, String lesson) {
         ArrayList<String> hashtags = new ArrayList<>();
         String keyword = "";
 
