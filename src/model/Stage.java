@@ -11,15 +11,18 @@ public class Stage {
     private Calendar startDate;
     private Calendar endDate;
 
-    private Capsule[] capsules = new Capsule[51]; //50 + 1 capsule that is pre-created to access its types in Main
+    private Capsule[] capsules;
     private int amountCapsules = 0;
-    private String[] capsuleTypes = {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
+    private String[] capsuleTypes;
 
 
     public Stage(String name, boolean isActive) {
         this.name = name;
         this.isActive = isActive;
         this.startDate = Calendar.getInstance();
+
+        this.capsules = new Capsule[50];
+        this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
     }
 
     //---------- Setters ----------
@@ -91,7 +94,7 @@ public class Stage {
     public String addCapsule(Capsule capsule) {
         String msg = "\nCapacidad máxima (50) alcanzada.";
 
-        if(amountCapsules < 50) {
+        if(amountCapsules < capsules.length) {
             amountCapsules ++;
             capsules[amountCapsules] = capsule;
             msg = "\nCapsula registrada con exito.";

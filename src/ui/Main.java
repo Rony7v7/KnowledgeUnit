@@ -178,7 +178,9 @@ class Main{
         input.nextLine();
     }
 
-    public void registerCapsule() { // EL SISTEMA REGISTRA CAPSULAS A LA ETAPA ACTIVA || REGISTRAR #
+    public void registerCapsule() {
+        String msgValidation;
+
         int lastProjectPosition = controller.projectsIsEmpty();
         int projectPosToRegister;
 
@@ -199,9 +201,6 @@ class Main{
 
             System.out.print("Contexto de la situación a registrar:  ");
             description = input.nextLine();
-
-            //PreCreate capsule to access the capsule types
-            controller.registerCapsule(-1, 10, "#null#", 0, "#null#");
             
             capsuleTypes = controller.getCapsuleTypes();
 
@@ -223,10 +222,11 @@ class Main{
 
             }while(capsuleType < 1 || capsuleType > capsuleTypes.length);
 
-            System.out.print("\nLección aprendida\n- ");
+            System.out.print("\nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).\nLección aprendida\n- ");
             lesson = input.nextLine();
 
-            controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson);
+            msgValidation = controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson);
+            System.out.println(msgValidation);
         } else {
             System.out.println("\nNo hay proyectos registrados.");
         }
@@ -235,6 +235,13 @@ class Main{
         input.nextLine();
     }
 
+    public void approveCapsule() {
+
+        
+        
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
     //-------------Aux Methods -----------
 
     public void cleanScreen() {

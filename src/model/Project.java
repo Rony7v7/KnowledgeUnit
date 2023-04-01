@@ -13,20 +13,11 @@ public class Project {
     private double budget;
     private String[] clientData; //Crear clase client?
 
-    private Employee[] collaborators = {new Employee("COLABORADOR 1", "COLLABORATOR"),
-                                        new Employee("COLABORADOR 2", "COLLABORATOR"),
-                                        new Employee("COLABORADOR 3", "COLLABORATOR"),
-                                        new Employee("COLABORADOR 4", "COLLABORATOR"),
-                                        new Employee("COLABORADOR 5", "COLLABORATOR")};
+    private Employee[] collaborators;
 
-    private Employee[] managers; //Crear clase manager?
+    private Employee[] managers; //Herencia?
     
-    private Stage[] stages = {new Stage("INICIO",true),
-                              new Stage("ANALISIS",false), 
-                              new Stage("DISEÑO",false), 
-                              new Stage("EJECUCION",false), 
-                              new Stage("CIERRE Y SEGUIMIENTO",false), 
-                              new Stage("CONTROL",false)};
+    private Stage[] stages;
 
     public Project(String name, Calendar startDate, Calendar endDate, Double budget, Employee[] managers, String[] clientData) {
         this.name = name;
@@ -35,8 +26,20 @@ public class Project {
         this.budget = budget;
         this.managers = managers;
         this.clientData = clientData;
-    }
 
+        this.stages = new Stage[]  {new Stage("INICIO",true),
+                                    new Stage("ANALISIS",false), 
+                                    new Stage("DISEÑO",false), 
+                                    new Stage("EJECUCION",false), 
+                                    new Stage("CIERRE Y SEGUIMIENTO",false), 
+                                    new Stage("CONTROL",false)};
+
+        this.collaborators = new Employee[] {new Employee("COLABORADOR 1", "COLLABORATOR"),
+                                             new Employee("COLABORADOR 2", "COLLABORATOR"),
+                                             new Employee("COLABORADOR 3", "COLLABORATOR"),
+                                             new Employee("COLABORADOR 4", "COLLABORATOR"),
+                                             new Employee("COLABORADOR 5", "COLLABORATOR")};
+    }
 
     //--------- Setters ----------
 
@@ -232,13 +235,14 @@ public class Project {
         capsule = new Capsule(id, description, typeName, lesson);
 
         //SET #'s 
-        if(!assignHashtags(capsule, description,lesson)) {
-            msg = "\nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).";
-        }
-        
-        
-        //if assigned # succesfully, assign capsule
-        if(msg.equals("")) {
+        ArrayList <String> hashtags = assignHashtags(capsule, description,lesson);
+        System.out.println(hashtags);
+    
+        if(hashtags.isEmpty()) {
+            msg = "\nRegistro fallido. \nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).";
+        } else {
+            
+            capsule.setHashtags(hashtags);
             msg = stageActive.addCapsule(capsule);
             collaborators[collaboratorPos].addCapsule(capsule);
         }
@@ -246,9 +250,8 @@ public class Project {
         return msg;
     }
 
-    public boolean assignHashtags(Capsule capsule,String description, String lesson) {  //problemas
-        boolean validation = true;
-        ArrayList<String> hashtags = new ArrayList<String>();
+    public ArrayList<String> assignHashtags(Capsule capsule,String description, String lesson) {
+        ArrayList<String> hashtags = new ArrayList<>();
         String keyword = "";
 
         String[] texts = {description, lesson};
@@ -258,19 +261,14 @@ public class Project {
         for(int i = 0 ; i < texts.length ; i++ ) {
             textSplit = texts[i].split("#");
 
-        //if the text starts with # starts in j = 1, else j = 0, because the method split.
-        for(int j = (textSplit.length%2 != 0) ? 1:0 ; j < textSplit.length ; j += 2) {
-            keyword = texts[j];
-
-            hashtags.add(keyword);
-           }
+            //separate hashtags
+            for(int j = 1 ; j < textSplit.length ; j += 2) {
+                keyword = textSplit[j];
+                hashtags.add(keyword);
+            }
         }
 
-        if(hashtags.isEmpty()) {
-            validation = false;
-        }
-
-        return validation;
+        return hashtags;
     }
 
 }

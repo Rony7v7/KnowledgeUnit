@@ -5,13 +5,16 @@ import java.text.SimpleDateFormat;
 
 public class GreenSQA {
     private static final int SIZE = 11; //10 + 1 project that is pre-created to access its stage names in Main 
-    private Project[] projects = new Project[SIZE];
+    private Project[] projects;
 
-    private Employee[] managers = {new Employee("GERENTE 1", "MANAGER"),
-                                   new Employee("GERENTE 2", "MANAGER"),
-                                   new Employee("GERENTE 3", "MANAGER")};
+    private Employee[] managers;
     
     public GreenSQA() {
+        this.projects = new Project[SIZE];
+
+        this.managers = new Employee[] {new Employee("GERENTE 1", "MANAGER"),
+                                        new Employee("GERENTE 2", "MANAGER"),
+                                        new Employee("GERENTE 3", "MANAGER")};
         //Constructor
     }
 
@@ -120,7 +123,9 @@ public class GreenSQA {
         return lastFullPosition;
     }
 
-
+    public void registerCapsuleModel() {
+        projects[10].registerCapsule(SIZE, null, SIZE, null);
+    }
     //---------  Getters  ----------
 
     //Projects
@@ -176,7 +181,7 @@ public class GreenSQA {
 
     //Capsules
     public String[] getCapsuleTypes() {
-        return projects[0].getCapsuleTypes();
+        return projects[10].getCapsuleTypes();
     }
 
     //---------  Setters  ---------

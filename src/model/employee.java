@@ -7,12 +7,15 @@ public class Employee {
 
     private Capsule[] collabCapsules = new Capsule[50]; //ARRAYLIST
     private int amountCapsules = 0;
-    private String[] capsuleTypes = {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
+    private String[] capsuleTypes;
 
 
     public Employee(String name, String role) { //SET phone manager
         this.name = name;
         this.role = role;
+
+        this.collabCapsules = new Capsule[50];
+        this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
     }
 
 
