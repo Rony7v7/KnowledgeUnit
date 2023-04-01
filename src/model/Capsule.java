@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Capsule {
-    private String id;
+    private String id; //Id's diferentes por proytecto? por etapa? 
     private String description;
     private String type;
     private String lesson;
@@ -17,6 +17,7 @@ public class Capsule {
         this.type = type;
         this.lesson = lesson;
         this.hashtags = hashtags;
+        this.status = "UNDER REVIEW";
     }
 
     //Getters
@@ -44,4 +45,13 @@ public class Capsule {
         return status;
     }
     
+    public String getInfo() {
+        return id+" | "+type+" | "+description+"\n- "+lesson;
+    }
+
+    //Setters
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

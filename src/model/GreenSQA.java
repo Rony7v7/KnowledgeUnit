@@ -67,7 +67,7 @@ public class GreenSQA {
         if(projectPosition != -1) {
 
             if(projects[projectPosition].closeStage()) {
-                msg =  "\nEtapa culminada con éxito, nueva etapa: "+getStageActive(projectPosition);
+                msg =  "\nEtapa culminada con éxito, nueva etapa: "+getStageActiveName(projectPosition);
             }else{
                 msg = "\nUltima etapa culminada con éxito, proyecto finalizado.";
             }
@@ -84,8 +84,14 @@ public class GreenSQA {
         return msg;
     }
 
-    public void approveCapsule() {
-        
+    public String approveCapsule(int capsulePos) {
+        String msg ="\nNo hay capsulas registradas.";
+        if(capsulePos != -1) {
+
+            msg = "\nCapsula Aprobada exitosamente.";
+        }
+
+        return msg;
     }
 
     public void listCapsules() {
@@ -160,8 +166,8 @@ public class GreenSQA {
         return projects[10].getStageNames();
     }
 
-    public String getStageActive(int projectPosition) {
-        return projects[projectPosition].getStageActive();
+    public String getStageActiveName(int projectPosition) {
+        return projects[projectPosition].getStageActiveName();
     }
 
     //Employees
@@ -184,6 +190,9 @@ public class GreenSQA {
         return projects[10].getCapsuleTypes();
     }
 
+    public String[] getCapsulesToReviewInfo(int projectPosition) {
+        return projects[projectPosition].getCapsulesToReviewInfo();
+    }
     //---------  Setters  ---------
 
 

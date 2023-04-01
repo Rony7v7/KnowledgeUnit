@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Stage {
@@ -12,7 +13,9 @@ public class Stage {
     private Calendar endDate;
 
     private Capsule[] capsules;
-    private int amountCapsules = 0;
+    private ArrayList <Capsule> capsulesUnderReview;
+    private ArrayList <Capsule> capsulesApproved;
+    private int amountCapsules;
     private String[] capsuleTypes;
 
 
@@ -20,9 +23,12 @@ public class Stage {
         this.name = name;
         this.isActive = isActive;
         this.startDate = Calendar.getInstance();
+        this.amountCapsules = 0;
 
         this.capsules = new Capsule[50];
         this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
+        this.capsulesUnderReview = new ArrayList<>();
+        this.capsulesApproved = new ArrayList<>();
     }
 
     //---------- Setters ----------
@@ -90,17 +96,45 @@ public class Stage {
         return amountCapsules;
     }
 
+    public int getAmountCapsulesUnderReview() {
+        return capsulesUnderReview.size();
+    }
+
+    public int getAmountCapsulesApproved() {
+        return capsulesApproved.size();
+    }
+
+    public String getCapsuleInfo(int capsulePosition, int capsuleStatus) { // 0 -> all ; 1 -> under Review; 2 -> Approved
+        String capsuleInfo = "";
+        switch (capsuleStatus) {
+            case 0: capsuleInfo = capsules[capsulePosition].getInfo();
+                break;
+            case 1: capsuleInfo = capsulesUnderReview.get(capsulePosition).getInfo();
+                break;
+            case 2: capsuleInfo = capsulesApproved.get(capsulePosition).getInfo();
+                break;
+
+        }
+        return capsuleInfo;
+    }
+
     //AUX
     public String addCapsule(Capsule capsule) {
         String msg = "\nCapacidad máxima (50) alcanzada.";
 
         if(amountCapsules < capsules.length) {
-            amountCapsules ++;
             capsules[amountCapsules] = capsule;
+            capsulesUnderReview.add(capsule);
+            amountCapsules ++;
+            
             msg = "\nCapsula registrada con exito.";
         }
 
         return msg;
+    }
+
+    public void approveCapsule(Capsule capsule) {
+        
     }
 
 }

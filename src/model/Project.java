@@ -11,7 +11,7 @@ public class Project {
     private Calendar endPlannedDate;
     private Calendar endDate;
     private double budget;
-    private String[] clientData; //Crear clase client?
+    private String[] clientData;
 
     private Employee[] collaborators;
 
@@ -153,7 +153,7 @@ public class Project {
         return stageNames;
     }
 
-    public String getStageActive() { //stageActiveName
+    public String getStageActiveName() { //stageActiveName
         boolean isActive = false;
         String stageName = "";
 
@@ -165,12 +165,40 @@ public class Project {
         }
         return stageName;
     }
-    
+
     //Capsules
     public String[] getCapsuleTypes() {
         return stages[0].getCapsuleTypes();
     }
 
+    public String[] getCapsulesToReviewInfo() {
+        Stage stageActive = stages[0];
+        String[] capsulesInfo = new String[1];
+        boolean isFound = false;
+        int capsulesAmount; 
+
+        //Search stage active
+        for(int i = 0; i < stages.length && !isFound ; i++) {
+            if(stages[i].getStatus()) {
+                stageActive = stages[i] ;
+                isFound = true;
+            }
+        }
+
+        capsulesAmount = stageActive.getAmountCapsulesUnderReview();
+
+        if(capsulesAmount != 0) {
+            capsulesInfo = new String[capsulesAmount];
+            for(int i = 0 ; i < capsulesAmount ; i++) {
+                capsulesInfo[i] = stageActive.getCapsuleInfo(i,1);
+            }
+        } else {
+            //if there are not capsules, the first and only position is null
+            capsulesInfo = new String[]{null};
+        }
+
+        return capsulesInfo;
+    }
     //Employee
     public String[] getCollaboratorNames() {
         String [] collaboratorNames = new String[collaborators.length];
@@ -187,7 +215,7 @@ public class Project {
         boolean stillActive = false;
         for(int i = 0; i < stages.length && !stillActive ; i++) {
             //  if there is a stage active and if is not the last one
-            if(getStageActive().equals(stages[i].getName()) && i < stages.length-1) {
+            if(getStageActiveName().equals(stages[i].getName()) && i < stages.length-1) {
                 Calendar currentDate = Calendar.getInstance();
 
                 stages[i].setActive(false); //End Stage
@@ -269,4 +297,20 @@ public class Project {
         return hashtags;
     }
 
+    public void approveCapsule(int capsulePos) {
+        Stage stageActive = stages[0];
+
+        boolean isFound = false;
+        
+        //Search stage active
+        for(int i = 0; i < stages.length && !isFound ; i++) {
+            if(stages[i].getStatus()) {
+                stageActive = stages[i] ;
+                isFound = true;
+            }
+        }
+
+        stageActive.approveCapsule(null);
+
+    }
 }

@@ -5,7 +5,7 @@ public class Employee {
     private String role;
     private String phoneManager; 
 
-    private Capsule[] collabCapsules = new Capsule[50]; //ARRAYLIST
+    private Capsule[] collabCapsules = new Capsule[50]; //ARRAYLIST //COLLAB CARGO
     private int amountCapsules = 0;
     private String[] capsuleTypes;
 
@@ -17,7 +17,6 @@ public class Employee {
         this.collabCapsules = new Capsule[50];
         this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
     }
-
 
     //------- Getters -------
     public String getPhoneManager() {

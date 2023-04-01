@@ -71,7 +71,7 @@ class Main{
                 break;
             case 3: registerCapsule();
                 break;
-            case 4:
+            case 4: approveCapsule();
                 break;
             case 5:
                 break;
@@ -178,7 +178,7 @@ class Main{
         input.nextLine();
     }
 
-    public void registerCapsule() {
+    public void registerCapsule() { //Validar que pasa si el proyecto ya finalizó
         String msgValidation;
 
         int lastProjectPosition = controller.projectsIsEmpty();
@@ -235,9 +235,20 @@ class Main{
         input.nextLine();
     }
 
-    public void approveCapsule() {
+    public void approveCapsule() { //Validar que pasa si el proyecto ya finalizó
+        int projectPos = 0;
+        int capsulePos = 0;
+        String msgValidation;
+        int lastProjectPosition = controller.projectsIsEmpty();
 
-        
+        if(lastProjectPosition != -1) {
+            projectPos = showProjects(lastProjectPosition)-1;
+
+            capsulePos = showCapsulesToApprove(projectPos)-1;
+            
+        }else {
+            System.out.println("\nNo hay proyectos registrados.");
+        }
         
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
@@ -271,7 +282,7 @@ class Main{
                 System.out.print((i+1)+". "+controller.getProjectNames()[i]);
                 // if the project is active
                 if(controller.getProjectStatus(i)) {
-                    System.out.println(" |  Etapa activa: "+controller.getStageActive(i));
+                    System.out.println(" |  Etapa activa: "+controller.getStageActiveName(i));
                 } else{
                     System.out.println(" | PROYECTO CULMINADO | Fecha de culminación: "+controller.getProjectEndDate(i));
                 }
@@ -320,4 +331,30 @@ class Main{
         return option-1;
     }
 
+    public int showCapsulesToApprove(int projectPosition) {
+        String capsuleId = null;
+        int option = 0;
+        String[] capsulesToReviewInfo = controller.getCapsulesToReviewInfo(projectPosition);
+        
+        if(capsulesToReviewInfo[0] != null) {
+            do{
+                System.out.println("\nSelecciona la capsula a aprobar");
+                
+                for(int i = 0; i < capsulesToReviewInfo.length; i++) {
+                    System.out.println("\n"+(i+1)+". "+capsulesToReviewInfo[i]);
+                }
+
+                System.out.print("\n>> ");
+                option = input.nextInt();
+                input.nextLine();
+
+                if(option < 1) {
+                    System.out.println("\nOpción incorrecta.");
+                }
+
+            }while(option < 1);
+        }
+
+        return option;
+    }
 }
