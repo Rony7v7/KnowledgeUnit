@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Capsule {
     private String id; //Id's diferentes por proytecto? por etapa? 
@@ -8,6 +9,7 @@ public class Capsule {
     private String type;
     private String lesson;
     private String status;
+    private Calendar approvedDate;
 
     private ArrayList <String> hashtags; 
 
@@ -37,12 +39,16 @@ public class Capsule {
         return lesson;
     }
 
-    public ArrayList<String> getHashtags() {
-        return hashtags;
-    }
-    
     public String getStatus() {
         return status;
+    }
+
+    public Calendar getApprovedDate() {
+        return approvedDate;
+    }
+
+    public ArrayList<String> getHashtags() {
+        return hashtags;
     }
     
     public String getInfo() {
@@ -54,4 +60,7 @@ public class Capsule {
         this.status = status;
     }
 
+    public void setApprovedDate() {
+        this.approvedDate = Calendar.getInstance();
+    }
 }

@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public class GreenSQA {
-    private static final int SIZE = 11; //10 + 1 project that is pre-created to access its stage names in Main 
+    private static final int SIZE = 11; //10 + 1 project that is pre-created to access its stage names in Main //MANEJAR LA ESCALABILIDAD
     private Project[] projects;
 
     private Employee[] managers;
@@ -84,10 +84,10 @@ public class GreenSQA {
         return msg;
     }
 
-    public String approveCapsule(int capsulePos) {
+    public String approveCapsule(int projectPos, int capsulePos) {
         String msg ="\nNo hay capsulas registradas.";
         if(capsulePos != -1) {
-
+            projects[projectPos].approveCapsule(capsulePos);
             msg = "\nCapsula Aprobada exitosamente.";
         }
 
@@ -193,6 +193,7 @@ public class GreenSQA {
     public String[] getCapsulesToReviewInfo(int projectPosition) {
         return projects[projectPosition].getCapsulesToReviewInfo();
     }
+    
     //---------  Setters  ---------
 
 

@@ -269,8 +269,8 @@ public class Project {
         } else {
             //Create capsule
             capsule = new Capsule(id, description, typeName, lesson, hashtags);
-            msg = stageActive.addCapsule(capsule);
-            collaborators[collaboratorPos].addCapsule(capsule);
+            msg = stageActive.addCapsule(capsule);           
+            collaborators[collaboratorPos].addCapsule(stageActive.getName()+(stageActive.getAmountCapsules()-1));
         }
         
         return msg;
@@ -310,7 +310,7 @@ public class Project {
             }
         }
 
-        stageActive.approveCapsule(null);
+        stageActive.approveCapsule(capsulePos);
 
     }
 }

@@ -245,10 +245,14 @@ class Main{
             projectPos = showProjects(lastProjectPosition)-1;
 
             capsulePos = showCapsulesToApprove(projectPos)-1;
+
+            msgValidation = controller.approveCapsule(projectPos,capsulePos);
             
         }else {
-            System.out.println("\nNo hay proyectos registrados.");
+            msgValidation = "\nNo hay proyectos registrados.";
         }
+
+        System.out.println(msgValidation);
         
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
@@ -332,7 +336,6 @@ class Main{
     }
 
     public int showCapsulesToApprove(int projectPosition) {
-        String capsuleId = null;
         int option = 0;
         String[] capsulesToReviewInfo = controller.getCapsulesToReviewInfo(projectPosition);
         
@@ -348,13 +351,14 @@ class Main{
                 option = input.nextInt();
                 input.nextLine();
 
-                if(option < 1) {
+                if(option < 1 || option > capsulesToReviewInfo.length) {
                     System.out.println("\nOpción incorrecta.");
                 }
 
-            }while(option < 1);
+            }while(option < 1 || option > capsulesToReviewInfo.length);
         }
 
         return option;
     }
+
 }

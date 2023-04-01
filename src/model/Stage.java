@@ -133,8 +133,14 @@ public class Stage {
         return msg;
     }
 
-    public void approveCapsule(Capsule capsule) {
-        
+    public void approveCapsule(int capsulePos) {
+        Capsule capsule = capsulesUnderReview.get(capsulePos);
+
+        capsule.setStatus("Approved");
+        capsule.setApprovedDate();
+
+        capsulesUnderReview.remove(capsulePos);
+        capsulesApproved.add(capsule);
     }
 
 }

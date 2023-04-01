@@ -1,21 +1,20 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Employee {
     private String name;
     private String role;
     private String phoneManager; 
 
-    private Capsule[] collabCapsules = new Capsule[50]; //ARRAYLIST //COLLAB CARGO
-    private int amountCapsules = 0;
-    private String[] capsuleTypes;
+    private ArrayList <String> collabCapsulesPos; //The employee save the capsules position registered in stages
 
 
     public Employee(String name, String role) { //SET phone manager
         this.name = name;
         this.role = role;
 
-        this.collabCapsules = new Capsule[50];
-        this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
+        this.collabCapsulesPos = new ArrayList<>();
     }
 
     //------- Getters -------
@@ -31,24 +30,13 @@ public class Employee {
         return role;
     }
 
-    public int getAmountCapsules() {
-        return amountCapsules;
-    }
-
-    public String[] getCapsuleTypes() { //es importante?
-        return capsuleTypes;
-    }
-
     //-------- Setters -------
     public void setPhoneManager(String phoneManager) {
         this.phoneManager = phoneManager;
     }
 
-    public void addCapsule(Capsule capsule) {
-        if(amountCapsules < 50) {
-            collabCapsules[amountCapsules] = capsule;
-            amountCapsules ++;
-        }
+    public void addCapsule(String capsulePos) {
+        collabCapsulesPos.add(capsulePos);
     }
 
 
