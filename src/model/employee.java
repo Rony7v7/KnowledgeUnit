@@ -5,20 +5,18 @@ public class Employee {
     private String role;
     private String phoneManager; 
 
-    private Capsule[] collabCapsules = new Capsule[50];
+    private Capsule[] collabCapsules = new Capsule[50]; //ARRAYLIST
     private int amountCapsules = 0;
     private String[] capsuleTypes = {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
 
 
-    public Employee(String name, String role) {
+    public Employee(String name, String role) { //SET phone manager
         this.name = name;
         this.role = role;
     }
 
 
     //------- Getters -------
-
-    
     public String getPhoneManager() {
         return phoneManager;
     }
@@ -35,6 +33,10 @@ public class Employee {
         return amountCapsules;
     }
 
+    public String[] getCapsuleTypes() { //es importante?
+        return capsuleTypes;
+    }
+
     //-------- Setters -------
     public void setPhoneManager(String phoneManager) {
         this.phoneManager = phoneManager;
@@ -47,6 +49,5 @@ public class Employee {
         }
     }
 
-    
 
 }

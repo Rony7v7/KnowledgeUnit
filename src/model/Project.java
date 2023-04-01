@@ -1,5 +1,6 @@
-package model;
+package model; //HERENCIA
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Project {
@@ -18,7 +19,7 @@ public class Project {
                                         new Employee("COLABORADOR 4", "COLLABORATOR"),
                                         new Employee("COLABORADOR 5", "COLLABORATOR")};
 
-    private Employee[] managers; //Crear calse manager?
+    private Employee[] managers; //Crear clase manager?
     
     private Stage[] stages = {new Stage("INICIO",true),
                               new Stage("ANALISIS",false), 
@@ -224,18 +225,52 @@ public class Project {
         }
 
         //Set id
-        id = "CC"+stageActive.getAmountCapsules();
+        id = "CC"+stageActive.getAmountCapsules(); //IDs diferentes para cada estapa
         //Set Type
         typeName = getCapsuleTypes()[type];
         //Create capsule
         capsule = new Capsule(id, description, typeName, lesson);
 
-        //Assign capsule
-        msg = stageActive.addCapsule(capsule);
-        collaborators[collaboratorPos].addCapsule(capsule);
+        //SET #'s 
+        if(!assignHashtags(capsule, description,lesson)) {
+            msg = "\nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).";
+        }
+        
+        
+        //if assigned # succesfully, assign capsule
+        if(msg.equals("")) {
+            msg = stageActive.addCapsule(capsule);
+            collaborators[collaboratorPos].addCapsule(capsule);
+        }
         
         return msg;
     }
 
+    public boolean assignHashtags(Capsule capsule,String description, String lesson) {  //problemas
+        boolean validation = true;
+        ArrayList<String> hashtags = new ArrayList<String>();
+        String keyword = "";
+
+        String[] texts = {description, lesson};
+        String[] textSplit;
+        
+        //Split the 2 texts
+        for(int i = 0 ; i < texts.length ; i++ ) {
+            textSplit = texts[i].split("#");
+
+        //if the text starts with # starts in j = 1, else j = 0, because the method split.
+        for(int j = (textSplit.length%2 != 0) ? 1:0 ; j < textSplit.length ; j += 2) {
+            keyword = texts[j];
+
+            hashtags.add(keyword);
+           }
+        }
+
+        if(hashtags.isEmpty()) {
+            validation = false;
+        }
+
+        return validation;
+    }
 
 }

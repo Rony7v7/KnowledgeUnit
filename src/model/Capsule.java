@@ -6,7 +6,7 @@ public class Capsule {
     private String type;
     private String lesson;
 
-    private String[] hashtags;
+    private String[] hashtags; 
 
     public Capsule(String id, String description, String type, String lesson) {
         this.id = id;
@@ -14,7 +14,6 @@ public class Capsule {
         this.type = type;
         this.lesson = lesson;
     }
-
 
     //Getters
     public String getId() {
@@ -33,7 +32,9 @@ public class Capsule {
         return lesson;
     }
 
-    public String filterHasthtags() {
-        return "";
+    //------- Setters -------
+    public void setHashtags(String[] hashtags) {
+        this.hashtags = hashtags;
     }
+
 }

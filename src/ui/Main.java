@@ -187,7 +187,6 @@ class Main{
         String[] capsuleTypes;
         int capsuleType;
         String lesson;
-        String content;
         
         System.out.println("-------- REGISTRO DE CAPSULAS ---------");
 
@@ -202,7 +201,7 @@ class Main{
             description = input.nextLine();
 
             //PreCreate capsule to access the capsule types
-            controller.registerCapsule(-1, 10, null, 0, null);
+            controller.registerCapsule(-1, 10, "#null#", 0, "#null#");
             
             capsuleTypes = controller.getCapsuleTypes();
 
