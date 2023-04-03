@@ -15,6 +15,7 @@ public class Stage {
     private Capsule[] capsules;
     private ArrayList <Capsule> capsulesUnderReview;
     private ArrayList <Capsule> capsulesApproved;
+    private ArrayList <Capsule> capsulesPublished;
     private int amountCapsules;
     private String[] capsuleTypes;
 
@@ -92,19 +93,24 @@ public class Stage {
         return capsuleTypes;
     }
 
-    public int getAmountCapsules() {
-        return amountCapsules;
+    public int getAmountCapsules(int status) {
+        int amount = 0;
+
+        switch (status) {
+            case 0: amount = amountCapsules;
+                break;
+            case 1: amount = capsulesUnderReview.size();
+                break;
+            case 2: amount = capsulesApproved.size();
+                break;
+            case 3: amount = capsulesPublished.size();
+                break;
+        }
+        
+        return amount;
     }
 
-    public int getAmountCapsulesUnderReview() {
-        return capsulesUnderReview.size();
-    }
-
-    public int getAmountCapsulesApproved() {
-        return capsulesApproved.size();
-    }
-
-    public String getCapsuleInfo(int capsulePosition, int capsuleStatus) { // 0 -> all ; 1 -> under Review; 2 -> Approved
+    public String getCapsuleInfo(int capsulePosition, int capsuleStatus) { // 0 -> all ; 1 -> under Review; 2 -> Approved ; 3-> published
         String capsuleInfo = "";
         switch (capsuleStatus) {
             case 0: capsuleInfo = capsules[capsulePosition].getInfo();
@@ -113,7 +119,7 @@ public class Stage {
                 break;
             case 2: capsuleInfo = capsulesApproved.get(capsulePosition).getInfo();
                 break;
-
+            case 3: capsuleInfo = capsulesPublished.get(capsulePosition).getInfo();
         }
         return capsuleInfo;
     }
@@ -141,6 +147,18 @@ public class Stage {
 
         capsulesUnderReview.remove(capsulePos);
         capsulesApproved.add(capsule);
+    }
+
+    public String publicCapsule(int capsulePos) {
+        Capsule capsule = capsulesApproved.get(capsulePos);
+        String url = capsule.publicCapsule();
+
+        capsule.setStatus("Published");
+
+        capsulesApproved.remove(capsulePos);
+        capsulesPublished.add(capsule);
+
+        return url;
     }
 
 }

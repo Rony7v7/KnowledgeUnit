@@ -168,19 +168,18 @@ class Main{
         if(lastProjectPosition != -1) {
             projectPosToClose = showProjects(lastProjectPosition)-1;
             msgValidation = controller.closeStageProject(projectPosToClose);
-
-            System.out.println(msgValidation);
         } else {
-            System.out.println("\nNo hay proyectos registrados.");
+            msgValidation = "\nNo hay proyectos registrados.";
         }
+
+        System.out.println(msgValidation);
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
     }
 
-    public void registerCapsule() { //Validar que pasa si el proyecto ya finalizó
-        String msgValidation;
-
+    public void registerCapsule() { 
+        String msgValidation ="\nNo hay proyectos registrados.";
         int lastProjectPosition = controller.projectsIsEmpty();
         int projectPosToRegister;
 
@@ -195,61 +194,65 @@ class Main{
         if(lastProjectPosition != -1) {
             projectPosToRegister = showProjects(lastProjectPosition)-1;
 
-            collaboratorPos = inputEmployees("COLABORADOR",
-                                             controller.getCollaboratorNames(),
-                                             controller.getCollaboratorNames().length);
+            //if the project choosed is active
+            if(projectPosToRegister >= 0) {
+                collaboratorPos = inputEmployees("COLABORADOR",
+                controller.getCollaboratorNames(),
+                controller.getCollaboratorNames().length);
 
-            System.out.print("Contexto de la situación a registrar:  ");
-            description = input.nextLine();
-            
-            capsuleTypes = controller.getCapsuleTypes();
+                capsuleTypes = controller.getCapsuleTypes();
 
-            do{
-                System.out.println("\nTipo de capsula: ");
+                do{
+                    System.out.println("\nTipo de capsula: ");
 
-                for(int i = 0 ; i < capsuleTypes.length ; i++ ) {
+                    for(int i = 0 ; i < capsuleTypes.length ; i++ ) {
                     System.out.println((i+1)+". "+capsuleTypes[i]);
-                }
-                
-                System.out.print("\n>> ");
-                capsuleType = input.nextInt();
-                input.nextLine();
+                    }
 
-                if(capsuleType < 1 || capsuleType > capsuleTypes.length) {
+                    System.out.print("\n>> ");
+                    capsuleType = input.nextInt();
+                    input.nextLine();
+
+                    if(capsuleType < 1 || capsuleType > capsuleTypes.length) {
                     cleanScreen();
                     System.out.println("\nOpción incorrecta");
-                }
+                    }
 
-            }while(capsuleType < 1 || capsuleType > capsuleTypes.length);
+                }while(capsuleType < 1 || capsuleType > capsuleTypes.length);
 
-            System.out.print("\nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#).\nLección aprendida\n- ");
-            lesson = input.nextLine();
+                System.out.println("\nLa capsula debe tener mínimo una palabra clave (Ejemplo #Pruebas Funcionales#)");
+                System.out.print("Contexto de la situación a registrar: ");
+                description = input.nextLine();
 
-            msgValidation = controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson);
-            System.out.println(msgValidation);
-        } else {
-            System.out.println("\nNo hay proyectos registrados.");
+                System.out.print("\nLección aprendida\n- ");
+                lesson = input.nextLine();
+
+                msgValidation = controller.registerCapsule(collaboratorPos, projectPosToRegister,description, capsuleType-1, lesson);
+            } else {
+                msgValidation = "\nEl proyecto ya fue finalizado";
+            }
         }
+
+        System.out.println(msgValidation);
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
     }
 
-    public void approveCapsule() { //Validar que pasa si el proyecto ya finalizó
+    public void approveCapsule() { 
         int projectPos = 0;
         int capsulePos = 0;
-        String msgValidation;
+        String msgValidation = "\nNo hay proyectos registrados.";
         int lastProjectPosition = controller.projectsIsEmpty();
 
-        if(lastProjectPosition != -1) {
+        System.out.println("-------- APROBACIÓN DE CAPSULAS ---------");
+
+        if(lastProjectPosition >= 0) {
             projectPos = showProjects(lastProjectPosition)-1;
 
-            capsulePos = showCapsulesToApprove(projectPos)-1;
+            capsulePos = showCapsules(projectPos,1)-1;
 
             msgValidation = controller.approveCapsule(projectPos,capsulePos);
-            
-        }else {
-            msgValidation = "\nNo hay proyectos registrados.";
         }
 
         System.out.println(msgValidation);
@@ -257,6 +260,31 @@ class Main{
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
     }
+    
+    public void publicCapsule() {
+        int projectPos = 0;
+        int capsulePos = 0;
+        String msgValidation = "\nNo hay proyectos registrados";
+        int lastProjectPosition = controller.projectsIsEmpty();
+
+        System.out.println("-------- PUBLICACIÓN DE CAPSULAS ---------");
+
+        if(lastProjectPosition != -1) {
+            projectPos = showProjects(lastProjectPosition);
+            //if its a ended project, adapt 
+            projectPos = (projectPos>=0)? projectPos-1:-projectPos-1;
+
+            capsulePos = showCapsules(projectPos, capsulePos)-1;
+
+            msgValidation = controller.publicCapsule(projectPos, capsulePos);
+        }
+
+        System.out.println(msgValidation);
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
+
     //-------------Aux Methods -----------
 
     public void cleanScreen() {
@@ -305,9 +333,9 @@ class Main{
             //while    option is out of projects
         }while(option < 1 || option > lastProjectPosition+1);
 
-        // if option is a ended project, is out because other methods need choose projects actives or inactives.
+        // if option is a ended project, option switch to negative form to filter.
         if(!controller.getProjectStatus(option-1)) {
-            option = 0;
+            option = -option;
         }
         
         return option;
@@ -335,30 +363,45 @@ class Main{
         return option-1;
     }
 
-    public int showCapsulesToApprove(int projectPosition) {
+    public int showCapsules(int projectPosition, int capsulesStatus) { //0 -> all ; 1 -> Under review ; 2 -> Approved ; 3 -> published
         int option = 0;
-        String[] capsulesToReviewInfo = controller.getCapsulesToReviewInfo(projectPosition);
-        
-        if(capsulesToReviewInfo[0] != null) {
-            do{
-                System.out.println("\nSelecciona la capsula a aprobar");
-                
-                for(int i = 0; i < capsulesToReviewInfo.length; i++) {
-                    System.out.println("\n"+(i+1)+". "+capsulesToReviewInfo[i]);
-                }
+        int count = 0;
 
-                System.out.print("\n>> ");
-                option = input.nextInt();
-                input.nextLine();
+        //If the project is active
+        if(projectPosition >= 0) {
+            //if the project has capsules under review
+            if(controller.getAmountCapsules(projectPosition, capsulesStatus) > 0) {
+                String[][] capsulesInfo = controller.getCapsulesInfo(projectPosition, capsulesStatus);
 
-                if(option < 1 || option > capsulesToReviewInfo.length) {
-                    System.out.println("\nOpción incorrecta.");
-                }
+                do{
+                    System.out.println("\nSelecciona la capsula a aprobar");
 
-            }while(option < 1 || option > capsulesToReviewInfo.length);
+                    //for each stage
+                    for(int i = 0; i < capsulesInfo.length; i++) {
+                        //print the capsules info
+                        if(capsulesInfo[i] != null) {
+                            for(int j = 0; j < capsulesInfo[i].length; j++) {
+                                count++;
+                                System.out.println("\n"+count+". "+capsulesInfo[i][j]);
+                            }
+                        }
+                        
+                    }
+
+                    System.out.print("\n>> ");
+                    option = input.nextInt();
+                    input.nextLine();
+
+                    if(option < 1 || option > capsulesInfo.length) {
+                        System.out.println("\nOpción incorrecta.");
+                    }
+
+                }while(option < 1 || option > capsulesInfo.length);
+            }
         }
 
         return option;
     }
+
 
 }

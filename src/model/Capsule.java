@@ -63,4 +63,10 @@ public class Capsule {
     public void setApprovedDate() {
         this.approvedDate = Calendar.getInstance();
     }
+
+    //AUX
+    public String publicCapsule() {
+        return "https://www.greensqa.com/"+id;
+    }
+
 }

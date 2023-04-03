@@ -171,34 +171,57 @@ public class Project {
         return stages[0].getCapsuleTypes();
     }
 
-    public String[] getCapsulesToReviewInfo() {
-        Stage stageActive = stages[0];
-        String[] capsulesInfo = new String[1];
-        boolean isFound = false;
-        int capsulesAmount; 
+    public String[][] getCapsulesInfo(int capsulesStatus) {
+        String[][] capsulesInfoPerStage = new String[stages.length][];
+        String [] capsulesInfo;
+        int amountCapsules = 0; 
 
-        //Search stage active
-        for(int i = 0; i < stages.length && !isFound ; i++) {
-            if(stages[i].getStatus()) {
-                stageActive = stages[i] ;
-                isFound = true;
+        for(int i = 0; i < stages.length; i++) {
+            amountCapsules = stages[i].getAmountCapsules(capsulesStatus);
+            
+            if(amountCapsules != 0){
+                capsulesInfo = new String[amountCapsules];
+
+                for(int j = 0 ; j < amountCapsules ; j++) {
+                    capsulesInfo[j] = stages[i].getCapsuleInfo(j,capsulesStatus);
+                }
+                capsulesInfoPerStage[i] = capsulesInfo;
+
+            } else {
+                capsulesInfoPerStage[i] = null; 
             }
         }
 
-        capsulesAmount = stageActive.getAmountCapsulesUnderReview();
+        // capsulesInfo = new String[amountCapsules];
 
-        if(capsulesAmount != 0) {
-            capsulesInfo = new String[capsulesAmount];
-            for(int i = 0 ; i < capsulesAmount ; i++) {
-                capsulesInfo[i] = stageActive.getCapsuleInfo(i,1);
-            }
-        } else {
-            //if there are not capsules, the first and only position is null
-            capsulesInfo = new String[]{null};
-        }
+        // for(int i = 0; i < stages.length; i++) {
+            
+        // }
 
-        return capsulesInfo;
+        // amountCapsules = stageActive.getAmountCapsules(capsulesStatus);
+
+        // if(amountCapsules != 0) {
+        //     capsulesInfo = new String[amountCapsules];
+        //     for(int i = 0 ; i < amountCapsules ; i++) {
+        //         capsulesInfo[i] = stageActive.getCapsuleInfo(i,capsulesStatus);
+        //     }
+        // } else {
+        //     //if there are not capsules, the first and only position is null
+        //     capsulesInfo = new String[]{null};
+        // }
+        
+
+        return capsulesInfoPerStage;
     }
+
+    public int getAmountCapsules(int status) { 
+        int amountCapsules = 0; 
+        for(int i = 0; i < stages.length; i++) {
+            amountCapsules += stages[i].getAmountCapsules(status);
+        }
+        return amountCapsules;
+    }
+
     //Employee
     public String[] getCollaboratorNames() {
         String [] collaboratorNames = new String[collaborators.length];
@@ -256,7 +279,7 @@ public class Project {
         }
 
         //Set id
-        id = "CC"+stageActive.getAmountCapsules(); //IDs diferentes para cada estapa
+        id = "CC"+name+stageActive.getName()+stageActive.getAmountCapsules(0);
         //Set Type
         typeName = getCapsuleTypes()[type];
         
@@ -269,8 +292,8 @@ public class Project {
         } else {
             //Create capsule
             capsule = new Capsule(id, description, typeName, lesson, hashtags);
-            msg = stageActive.addCapsule(capsule);           //UPDATE
-            collaborators[collaboratorPos].addCapsule(stageActive.getName()+(stageActive.getAmountCapsules()-1));
+            msg = stageActive.addCapsule(capsule);
+            collaborators[collaboratorPos].addCapsule(id);
         }
         
         return msg;
@@ -301,8 +324,28 @@ public class Project {
     }
 
     public void approveCapsule(int capsulePos) {
-        Stage stageActive = stages[0];
+        int count = 0;
+        boolean isFound = false;
+        
+        //Search 
+        for(int i = 0; i < stages.length && !isFound ; i++) {
 
+            if(stages[i].getAmountCapsules(1) > 0) {
+                for(int j = 0; j < stages[i].getAmountCapsules(1) && !isFound; j++) {
+
+                    if(count == capsulePos) {
+                        stages[i].approveCapsule(j);
+                        isFound = true;
+                    }
+                    count++;
+                    
+                }
+            }
+        }
+    }
+
+    public String publicCapsule(int capsulePos) {
+        Stage stageActive = stages[0];
         boolean isFound = false;
         
         //Search stage active
@@ -312,8 +355,8 @@ public class Project {
                 isFound = true;
             }
         }
-
-        stageActive.approveCapsule(capsulePos);
-
+    
+        return stageActive.publicCapsule(capsulePos);
     }
+
 }

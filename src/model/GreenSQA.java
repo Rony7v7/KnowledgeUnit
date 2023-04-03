@@ -64,7 +64,8 @@ public class GreenSQA {
     public String closeStageProject(int projectPosition) {
         String msg = "No hay proyectos activos";
 
-        if(projectPosition != -1) {
+        //if the project is active
+        if(projectPosition >= 0) {
 
             if(projects[projectPosition].closeStage()) {
                 msg =  "\nEtapa culminada con éxito, nueva etapa: "+getStageActiveName(projectPosition);
@@ -80,15 +81,33 @@ public class GreenSQA {
     }
 
     public String registerCapsule(int collaboratorPos, int projectPosition, String description, int type, String lesson) {
-        String msg = projects[projectPosition].registerCapsule(collaboratorPos, description, type, lesson);
-        return msg;
+        return projects[projectPosition].registerCapsule(collaboratorPos, description, type, lesson);
     }
 
     public String approveCapsule(int projectPos, int capsulePos) {
-        String msg ="\nNo hay capsulas para revisar.";
+        String msg = "\nEl proyecto ya fue finalizado.";
+        //if the project choosed is active
+        if(projectPos != -1) {
+
+            //if the project has capsules under review
+            if(capsulePos != -1) {
+                projects[projectPos].approveCapsule(capsulePos);
+                msg = "\nCapsula Aprobada exitosamente.";
+            } else {
+                msg ="\nNo hay capsulas para revisar.";
+            }
+        }
+        return msg;
+    }
+
+    public String publicCapsule(int projectPos, int capsulePos) {
+        String msg;
+
+        //if the project has capsules approved
         if(capsulePos != -1) {
-            projects[projectPos].approveCapsule(capsulePos);
-            msg = "\nCapsula Aprobada exitosamente.";
+            msg = "\nCapsula Publicada exitosamente.\n"+projects[projectPos].publicCapsule(capsulePos);
+        } else {
+            msg ="\nNo hay capsulas para publicar.";
         }
 
         return msg;
@@ -161,7 +180,7 @@ public class GreenSQA {
     }
 
     //Stages
-    public String[] getStageNames() { // Hacer lo mismo pero con las capsulas
+    public String[] getStageNames() {
         projects[10] = new Project(null, null, null, 0.0, null, null);
         return projects[10].getStageNames();
     }
@@ -190,11 +209,13 @@ public class GreenSQA {
         return projects[10].getCapsuleTypes();
     }
 
-    public String[] getCapsulesToReviewInfo(int projectPosition) {
-        return projects[projectPosition].getCapsulesToReviewInfo();
+    public String[][] getCapsulesInfo(int projectPosition,int capsulesStatus) {
+        return projects[projectPosition].getCapsulesInfo(capsulesStatus);
     }
     
+    public int getAmountCapsules(int projectPosition, int capsulesStatus) {
+        return projects[projectPosition].getAmountCapsules(capsulesStatus);
+    }
     //---------  Setters  ---------
-
 
 }
