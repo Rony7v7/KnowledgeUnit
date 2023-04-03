@@ -90,7 +90,7 @@ public class GreenSQA {
         if(projectPos != -1) {
 
             //if the project has capsules under review
-            if(capsulePos != -1) {
+            if(capsulePos != -1 && getProjectStatus(projectPos)) {
                 projects[projectPos].approveCapsule(capsulePos);
                 msg = "\nCapsula Aprobada exitosamente.";
             } else {

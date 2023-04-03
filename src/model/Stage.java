@@ -30,6 +30,7 @@ public class Stage {
         this.capsuleTypes = new String[] {"TÉCNICO","GESTIÓN","DOMINIO","EXPERIENCIAS"};
         this.capsulesUnderReview = new ArrayList<>();
         this.capsulesApproved = new ArrayList<>();
+        this.capsulesPublished = new ArrayList<>();
     }
 
     //---------- Setters ----------
@@ -93,7 +94,7 @@ public class Stage {
         return capsuleTypes;
     }
 
-    public int getAmountCapsules(int status) {
+    public int getAmountCapsules(int status) {  // 0 -> all ; 1 -> under Review; 2 -> Approved ; 3-> published
         int amount = 0;
 
         switch (status) {
@@ -110,7 +111,7 @@ public class Stage {
         return amount;
     }
 
-    public String getCapsuleInfo(int capsulePosition, int capsuleStatus) { // 0 -> all ; 1 -> under Review; 2 -> Approved ; 3-> published
+    public String getCapsuleInfo(int capsulePosition, int capsuleStatus) {  // 0 -> all ; 1 -> under Review; 2 -> Approved ; 3-> published
         String capsuleInfo = "";
         switch (capsuleStatus) {
             case 0: capsuleInfo = capsules[capsulePosition].getInfo();
@@ -125,12 +126,13 @@ public class Stage {
     }
 
     //AUX
-    public String addCapsule(Capsule capsule) {
+    public String addCapsule(String id, String description, String type, String lesson, ArrayList<String> hashtags) {
         String msg = "\nCapacidad máxima (50) alcanzada.";
 
         if(amountCapsules < capsules.length) {
-            capsules[amountCapsules] = capsule;
-            capsulesUnderReview.add(capsule);
+
+            capsules[amountCapsules] = new Capsule(id, description, type, lesson, hashtags);
+            capsulesUnderReview.add(capsules[amountCapsules]);
             amountCapsules ++;
             
             msg = "\nCapsula registrada con exito.";
@@ -151,6 +153,7 @@ public class Stage {
 
     public String publicCapsule(int capsulePos) {
         Capsule capsule = capsulesApproved.get(capsulePos);
+
         String url = capsule.publicCapsule();
 
         capsule.setStatus("Published");

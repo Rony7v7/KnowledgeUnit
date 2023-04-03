@@ -73,7 +73,7 @@ class Main{
                 break;
             case 4: approveCapsule();
                 break;
-            case 5:
+            case 5: publicCapsule();
                 break;
             case 6:
                 break;
@@ -239,7 +239,7 @@ class Main{
         input.nextLine();
     }
 
-    public void approveCapsule() { 
+    public void approveCapsule() { //Si el proyecto esta acabado no se muestra el mensaje, o se pueden aprobar?
         int projectPos = 0;
         int capsulePos = 0;
         String msgValidation = "\nNo hay proyectos registrados.";
@@ -261,7 +261,7 @@ class Main{
         input.nextLine();
     }
     
-    public void publicCapsule() {
+    public void publicCapsule() { 
         int projectPos = 0;
         int capsulePos = 0;
         String msgValidation = "\nNo hay proyectos registrados";
@@ -274,7 +274,7 @@ class Main{
             //if its a ended project, adapt 
             projectPos = (projectPos>=0)? projectPos-1:-projectPos-1;
 
-            capsulePos = showCapsules(projectPos, capsulePos)-1;
+            capsulePos = showCapsules(projectPos, 2)-1;
 
             msgValidation = controller.publicCapsule(projectPos, capsulePos);
         }
@@ -369,12 +369,12 @@ class Main{
 
         //If the project is active
         if(projectPosition >= 0) {
-            //if the project has capsules under review
+            //if the project has capsules
             if(controller.getAmountCapsules(projectPosition, capsulesStatus) > 0) {
                 String[][] capsulesInfo = controller.getCapsulesInfo(projectPosition, capsulesStatus);
 
                 do{
-                    System.out.println("\nSelecciona la capsula a aprobar");
+                    System.out.println("\nSelecciona la capsula:");
 
                     //for each stage
                     for(int i = 0; i < capsulesInfo.length; i++) {
@@ -392,11 +392,11 @@ class Main{
                     option = input.nextInt();
                     input.nextLine();
 
-                    if(option < 1 || option > capsulesInfo.length) {
+                    if(option < 1 || option > count) {
                         System.out.println("\nOpción incorrecta.");
                     }
 
-                }while(option < 1 || option > capsulesInfo.length);
+                }while(option < 1 || option > count);
             }
         }
 

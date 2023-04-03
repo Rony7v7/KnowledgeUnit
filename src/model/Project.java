@@ -153,7 +153,7 @@ public class Project {
         return stageNames;
     }
 
-    public String getStageActiveName() { //stageActiveName
+    public String getStageActiveName() {
         boolean isActive = false;
         String stageName = "";
 
@@ -191,25 +191,6 @@ public class Project {
                 capsulesInfoPerStage[i] = null; 
             }
         }
-
-        // capsulesInfo = new String[amountCapsules];
-
-        // for(int i = 0; i < stages.length; i++) {
-            
-        // }
-
-        // amountCapsules = stageActive.getAmountCapsules(capsulesStatus);
-
-        // if(amountCapsules != 0) {
-        //     capsulesInfo = new String[amountCapsules];
-        //     for(int i = 0 ; i < amountCapsules ; i++) {
-        //         capsulesInfo[i] = stageActive.getCapsuleInfo(i,capsulesStatus);
-        //     }
-        // } else {
-        //     //if there are not capsules, the first and only position is null
-        //     capsulesInfo = new String[]{null};
-        // }
-        
 
         return capsulesInfoPerStage;
     }
@@ -279,7 +260,7 @@ public class Project {
         }
 
         //Set id
-        id = "CC"+name+stageActive.getName()+stageActive.getAmountCapsules(0);
+        id = "CC"+(name+stageActive.getName()).hashCode()+stageActive.getAmountCapsules(0);
         //Set Type
         typeName = getCapsuleTypes()[type];
         
@@ -290,9 +271,7 @@ public class Project {
         if(hashtags.contains(null)) {
             msg = "\nRegistro fallido.\nEn la descripción y en la lección deben haber palabras clave (Ejemplo #Pruebas Funcionales#).";
         } else {
-            //Create capsule
-            capsule = new Capsule(id, description, typeName, lesson, hashtags);
-            msg = stageActive.addCapsule(capsule);
+            msg = stageActive.addCapsule(id, description, typeName, lesson, hashtags);
             collaborators[collaboratorPos].addCapsule(id);
         }
         
@@ -345,18 +324,26 @@ public class Project {
     }
 
     public String publicCapsule(int capsulePos) {
-        Stage stageActive = stages[0];
+        int count = 0;
         boolean isFound = false;
+        String msg = "NADA";
         
-        //Search stage active
+        //Search 
         for(int i = 0; i < stages.length && !isFound ; i++) {
-            if(stages[i].getStatus()) {
-                stageActive = stages[i] ;
-                isFound = true;
+            if(stages[i].getAmountCapsules(2) > 0) {
+
+                for(int j = 0; j < stages[i].getAmountCapsules(2) && !isFound; j++) {
+                    if(count == capsulePos) {
+                        msg = stages[i].publicCapsule(j);
+                        isFound = true;
+                    }
+                    count++;
+                    
+                }
             }
         }
     
-        return stageActive.publicCapsule(capsulePos);
+        return msg;
     }
 
 }
