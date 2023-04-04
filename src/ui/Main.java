@@ -4,18 +4,26 @@ import java.util.Scanner;
 import model.GreenSQA;
 
 /**
- * @author  Rony
+ * Knowledge System
+ * @author  Rony Ordoñez
  */
-class Main{
+public class Main{
 
     private Scanner input;
     private GreenSQA controller;
 
+    /**
+     * Constructor of Main
+     */
     public Main() {
         controller = new GreenSQA();
         input = new Scanner(System.in);
     }
 
+    /**
+     * Main method
+     * @param args An array of String objects representing the command-line arguments.
+     */
     public static void main(String[] args) {
         Main view = new Main();
         int option;
@@ -27,6 +35,10 @@ class Main{
 
     }
 
+    /**
+     * This method show all the requierement options
+     * @return user's option
+     */
     public int menu() {
         int option = 0;
 
@@ -63,6 +75,10 @@ class Main{
         return option;
     }
 
+    /**
+     * This method execute the user's option in the menu
+     * @param option user's option
+     */
     public void executeOption(int option) {
         switch (option) {
             case 1: initProject();
@@ -91,13 +107,7 @@ class Main{
     }
 
     /**
-     * initProject: This method 
-     * @param projectName
-     * @param budget
-     * @param amounManagers
-     * @param managersPosition
-     * @param clientData[]
-     * @param collaborator
+     * initProject: this method is in charge of asking the user for the data of a project in order to register it and create the instance.
      */
     public void initProject() {
         
@@ -157,6 +167,15 @@ class Main{
         
     }
 
+
+    /**
+     * This method closes a stage in a project by prompting the user to select the project and confirming the closure. 
+     * If there are no projects registered in the system, an error message is displayed. 
+     * 
+     * The method retrieves the last project position from the controller, and then displays a list of projects 
+     * for the user to choose from. Once a project is selected, the method calls the controller's 
+     * "closeStageProject" method to confirm the closure of the stage. 
+     */
     public void closeStage() {
         int projectPosToClose = 0;
         String msgValidation;
@@ -178,6 +197,10 @@ class Main{
         input.nextLine();
     }
 
+    /**
+    * Registers a new capsule for a selected project and collaborator. Prompts the user for input to create the new capsule.
+    * Displays an error message if there are no projects registered or if the selected project has already been finalized.
+     */
     public void registerCapsule() { 
         String msgValidation ="\nNo hay proyectos registrados.";
         int lastProjectPosition = controller.projectsIsEmpty();
@@ -239,7 +262,12 @@ class Main{
         input.nextLine();
     }
 
-    public void approveCapsule() { //Si el proyecto esta acabado no se muestra el mensaje, o se pueden aprobar?
+    /**
+     * This method allows to approve a capsule.
+     * It shows the list of projects and capsules that are available for approval.
+     * Once a project and a capsule are selected, the method calls the controller to approve the capsule.
+     */
+    public void approveCapsule() { 
         int projectPos = 0;
         int capsulePos = 0;
         String msgValidation = "\nNo hay proyectos registrados.";
@@ -261,6 +289,11 @@ class Main{
         input.nextLine();
     }
     
+    /**
+     * This method allows to publish a registered capsule in a project. It shows a list of existing projects
+     * and a list of capsules registered in the selected project, and then calls the corresponding method
+     * in the controller to publish the selected capsule.
+     */
     public void publicCapsule() { 
         int projectPos = 0;
         int capsulePos = 0;
@@ -287,11 +320,18 @@ class Main{
 
     //-------------Aux Methods -----------
 
+    /**
+     * Clean the screen
+     */
     public void cleanScreen() {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
     }
 
+    /**
+     * This method asks the user for the duration in months of each stage of the project
+     * @return array whit duration in months per stage
+     */
     public int[] inputStagesDuration( ) {
         String[] stageNames = controller.getStageNames();
         int[] MonthsPerStage = new int[stageNames.length];
@@ -304,6 +344,11 @@ class Main{
         return MonthsPerStage;
     }
 
+    /**
+     * Show all the projects to choose
+     * @param lastProjectPosition last full position of a project, also is the projects size -1
+     * @return User's option
+     */
     public int showProjects(int lastProjectPosition) {
         int option = 0;
 
@@ -341,6 +386,14 @@ class Main{
         return option;
     }
 
+    /**
+     * Show all the employees, managers or collaborators to choose from and get user's input.
+     *
+     * @param employeeRole The role of the employees to be displayed.
+     * @param employeeNames An array containing the names of the employees to be displayed.
+     * @param amountEmployees The number of employees to be displayed.
+     * @return The index of the selected employee.
+     */
     public int inputEmployees(String employeeRole, String[] employeeNames, int amountEmployees) { 
         int option = 0;
 
@@ -363,7 +416,15 @@ class Main{
         return option-1;
     }
 
-    public int showCapsules(int projectPosition, int capsulesStatus) { //0 -> all ; 1 -> Under review ; 2 -> Approved ; 3 -> published
+    /**
+     * Show all capsules under review, approved or published for a given project to choose from and get user's input.
+     *
+     * @param projectPosition The position of the project in the list of active projects.
+     * @param capsulesStatus An integer representing the status of the capsules to be displayed.
+     *                      0 for "Under Review", 1 for "Approved", 2 for "Published".
+     * @return The index of the selected capsule.
+     */
+    public int showCapsules(int projectPosition, int capsulesStatus) {
         int option = 0;
         int count = 0;
 
@@ -402,6 +463,5 @@ class Main{
 
         return option;
     }
-
 
 }
