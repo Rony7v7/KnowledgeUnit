@@ -243,7 +243,6 @@ public class Project {
     }
 
     public String registerCapsule(int collaboratorPos, String description, int type, String lesson) {
-        Capsule capsule;
         Stage stageActive = stages[0];
         String id;
         String typeName;
