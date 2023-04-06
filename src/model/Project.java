@@ -444,6 +444,7 @@ public class Project {
     public ArrayList<String> assignHashtags(String description, String lesson) {
         ArrayList<String> hashtags = new ArrayList<>();
         String keyword = "";
+        int hashtagCount = 0;
 
         String[] texts = {description, lesson};
         String[] textSplit;
@@ -451,6 +452,8 @@ public class Project {
         //Split the 2 texts
         for(int i = 0 ; i < texts.length ; i++ ) {
             textSplit = texts[i].split("#");
+            hashtagCount += textSplit.length - 1;
+
             if(textSplit.length == 1) {
                 hashtags.add(null);
             }
@@ -460,6 +463,11 @@ public class Project {
                 keyword = textSplit[j];
                 hashtags.add(keyword);
             }
+        }
+
+            // Check if number of hashtags is even and remove last hashtag if necessary
+        if(hashtagCount % 2 != 0) {
+            hashtags.remove(hashtags.size() - 1);
         }
 
         return hashtags;
