@@ -167,7 +167,6 @@ public class Main{
         
     }
 
-
     /**
      * This method closes a stage in a project by prompting the user to select the project and confirming the closure. 
      * If there are no projects registered in the system, an error message is displayed. 
