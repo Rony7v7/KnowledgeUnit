@@ -340,6 +340,26 @@ public class Project {
         return amountCapsules;
     }
 
+    /**
+     * Returns an array with the amount of capsules per type in this project, taking into account all stages.
+     * 
+     * @return int[] - Array with the amount of capsules per type in this project
+    */
+    public int[] getAmountCapsulesPerType() {
+        int[] amCapsPerType = new int[getCapsuleTypes().length];
+        int[] amCapsPerTypeInStage = new int[getCapsuleTypes().length];
+
+        for(int i = 0; i < stages.length; i ++) {
+            amCapsPerTypeInStage = stages[i].getAmountCapsulesPerType();
+            // to add
+            for(int j = 0; j < amCapsPerType.length; j++) {
+                amCapsPerType[j] += amCapsPerTypeInStage[j];
+            }
+        }
+
+        return amCapsPerType; 
+    }
+
     //Employee
 
     /**

@@ -91,7 +91,7 @@ public class Main{
                 break;
             case 5: publicCapsule();
                 break;
-            case 6:
+            case 6: showCapsulesAmount();
                 break;
             case 7:
                 break;
@@ -315,6 +315,32 @@ public class Main{
 
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
+    }
+
+    /**
+     * This method show the capsules amount per type in all projects
+     */
+    public void showCapsulesAmount() {
+        String[] capsuleTypes;
+        int[] capsulesAmount;
+        int lastProjectPosition = controller.projectsIsEmpty();
+
+        System.out.println("---------- CANTIDAD DE CÁPSULAS ---------");
+
+        if(lastProjectPosition != -1) {
+            capsuleTypes = controller.getCapsuleTypes();
+            capsulesAmount = controller.listCapsulesAmount();
+            
+            for(int i = 0; i < capsuleTypes.length; i++) {
+                System.out.println("\n- "+capsuleTypes[i]+" --> "+capsulesAmount[i]+"");
+            }
+        } else{
+            System.out.println("\nNo hay proyectos registrados.");
+        }
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+
     }
 
     //-------------Aux Methods -----------

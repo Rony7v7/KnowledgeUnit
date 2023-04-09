@@ -220,8 +220,34 @@ public class Stage {
         return capsuleInfo;
     }
 
+    /**
+     * Returns an array with the number of capsules per type in the stage
+     * 
+     * @return An array of integers with the number of capsules per type.
+    */
+    public int[] getAmountCapsulesPerType() {
+        int typesAmount = capsuleTypes.length; // 4 at the moment
+        int[] amountCapsulesPerType = new int[typesAmount];
+        
+        if(amountCapsules != 0) {
+            for(int i = 0; i < amountCapsules; i++) {
+                if(capsules[i].getType() == capsuleTypes[0]) {
+                    amountCapsulesPerType[0] ++;
+                }else if(capsules[i].getType() == capsuleTypes[1]){
+                    amountCapsulesPerType[1] ++;
+                }else if(capsules[i].getType() == capsuleTypes[2]){
+                    amountCapsulesPerType[2] ++;
+                }else if(capsules[i].getType() == capsuleTypes[3]){
+                    amountCapsulesPerType[3] ++;
+                }
+            }
+        }
+
+        return amountCapsulesPerType;
+    }
     
     //AUX
+
     /**
      * Adds a new capsule to the capsules array.
      * 

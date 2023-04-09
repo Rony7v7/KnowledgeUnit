@@ -156,9 +156,26 @@ public class GreenSQA {
         return msg;
     }
 
-    // public void listCapsules() {
+    /**
+     * Returns an array with the amount of capsules per type in all projects.
+     * 
+     * @return an array with the amount of capsules per type in all projects
+    */
+    public int[] listCapsulesAmount() {
+        int[] capsulesAmount = new int[getCapsuleTypes().length];
+        int[] capsulesAmountInProject = new int [getCapsuleTypes().length];
+        int projectsAmount = projectsIsEmpty()+1;
+        
+        for(int i = 0; i < projectsAmount; i++) {
+            capsulesAmountInProject = projects[i].getAmountCapsulesPerType();
+            //to add
+            for(int j = 0; j < capsulesAmountInProject.length; j++){
+                capsulesAmount[j] += capsulesAmountInProject[j];
+            }
+        }
 
-    // }
+        return capsulesAmount;
+    }
 
     // public void listlessons() {
 
