@@ -93,7 +93,7 @@ public class Main{
                 break;
             case 6: showCapsulesAmount();
                 break;
-            case 7:
+            case 7: showLessonsPerStage();
                 break;
             case 8:
                 break;
@@ -343,6 +343,58 @@ public class Main{
 
     }
 
+    /**
+     * This method show all lessons of the capsules in a specific stage.
+     */
+    public void showLessonsPerStage() {
+        String[] stageNames;
+        String[] capsulesInStage;
+        int option;
+
+        System.out.println("--------- LECCIONES APRENDIDAS POR ETAPA -------");
+
+        if(controller.projectsIsEmpty() != -1) {
+            stageNames = controller.getStageNames();
+
+            System.out.println("\nElige la etapa:\n");
+
+            //choose stage
+            do{
+                for(int i = 0 ; i < stageNames.length; i++) {
+                    System.out.println(+(i+1)+". "+stageNames[i]);
+                }
+                System.out.print("\n>> ");
+                option = input.nextInt();
+                input.nextLine();
+                System.out.println("");
+                
+                if(option < 1 || option > stageNames.length) {
+                    System.out.println("\nOpción incorrecta.");
+                }
+
+            }while(option < 1 || option > stageNames.length);
+
+            //show capsules info
+            for(int i = 0; i <= controller.projectsIsEmpty(); i++) {
+                capsulesInStage = controller.getCapsulesInfo(i, 0)[option-1];
+
+                if(capsulesInStage != null) {
+                    for(int j = 0; j < capsulesInStage.length; j++) {
+                        System.out.println("\n"+capsulesInStage[j]);
+                     }
+                } else {
+                    System.out.println("No hay etapas registradas en el proyecto "+controller.getProjectNames()[i]);
+                }
+            }
+            
+        }else {
+            System.out.println("\nNo hay proyectos registrados.");
+        }
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
+    
     //-------------Aux Methods -----------
 
     /**
