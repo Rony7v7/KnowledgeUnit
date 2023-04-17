@@ -177,13 +177,26 @@ public class GreenSQA {
         return capsulesAmount;
     }
 
-    // public void listlessons() {
+    
+    /** 
+     * @return String
+     */
+    public String showFullerProject() {
+        int capsulesAmount = -1;
+        String projectName ="";
+        int capsulesAmountInProject;
 
-    // }
+        for(int i = 0; i < SIZE-1; i++) {
+            capsulesAmountInProject = (projects[i] == null) ? 0 : getAmountCapsules(i, 0);
 
-    // public void showFullerProject() {
+            if(capsulesAmountInProject > capsulesAmount) {
+                capsulesAmount = capsulesAmountInProject;
+                projectName = getProjectNames()[i];
+            }
+        }
         
-    // }
+        return projectName;
+    }
 
     // public void verifyCapsuleRegister() {
 
@@ -202,7 +215,7 @@ public class GreenSQA {
         int lastFullPosition = -1;
         boolean isEmpty = false;
 
-        for(int i = 0; (i < SIZE && !isEmpty) ; i++) {
+        for(int i = 0; (i < SIZE-1 && !isEmpty) ; i++) {
             if (projects[i] != null) {
                 lastFullPosition = i;
             } else {

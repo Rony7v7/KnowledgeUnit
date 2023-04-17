@@ -95,7 +95,7 @@ public class Main{
                 break;
             case 7: showLessonsPerStage();
                 break;
-            case 8:
+            case 8: showFullerProject();
                 break;
             case 9:
                 break;
@@ -395,6 +395,22 @@ public class Main{
         input.nextLine();
     }
     
+    /**
+     * This method show the fuller project
+     */
+    public void showFullerProject() {
+        System.out.println("--------- PROYECTO CON MÁS CAPSULAS --------");
+        
+        if(controller.projectsIsEmpty() != -1) {
+            System.out.println("\nEL proyecto con más capsulas es: "+controller.showFullerProject());
+        } else {
+            System.out.println("\nNo hay proyectos registrados.");
+        }
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
+
     //-------------Aux Methods -----------
 
     /**
