@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
@@ -23,7 +24,6 @@ public class GreenSQA {
         this.managers = new Employee[] {new Employee("GERENTE 1", "MANAGER","12345678"),
                                         new Employee("GERENTE 2", "MANAGER","12345678"),
                                         new Employee("GERENTE 3", "MANAGER","12345678")};
-        //Constructor
     }
 
     /**
@@ -177,9 +177,10 @@ public class GreenSQA {
         return capsulesAmount;
     }
 
-    
     /** 
-     * @return String
+     * Returns the fuller project name
+     * 
+     * @return Fuller project name
      */
     public String showFullerProject() {
         int capsulesAmount = -1;
@@ -198,9 +199,39 @@ public class GreenSQA {
         return projectName;
     }
 
-    // public void verifyCapsuleRegister() {
+    /**
+     * Returns the confirmation if the collaborator has capsules
+     * 
+     * @param name name to search
+     * @return msg  validation
+     */
+    public String verifyCapsuleRegister(String name) {
+        String msg = "\nNombre no encontrado.";
+        int collabPos = getCollabPosByName(name);
+        int projectsEmpty = 0;
+        ArrayList<String> collabCapsulesIds;
+    
+        if( collabPos != -1) {
+            msg = "\nEl colaborador ha registrado las siguientes capsulas: ";
 
-    // }
+            for(int i = 0; i < projectsIsEmpty()+1; i++) {
+                collabCapsulesIds = projects[i].getCollaborators()[collabPos].getCollabCapsulesIds();
+
+                if(!collabCapsulesIds.isEmpty()) {
+                    msg += collabCapsulesIds;
+                } else {
+                    projectsEmpty++;
+                }
+            }
+
+            if(projectsEmpty == projectsIsEmpty()+1) {
+                msg = "\nEl colaborador no ha registrados capsulas en ningun proyecto.";
+            }
+
+        }
+
+        return msg;
+    }
 
     // public void searchLesson() {
 
@@ -318,6 +349,27 @@ public class GreenSQA {
     */
     public String[] getCollaboratorNames() {
         return projects[10].getCollaboratorNames();
+    }
+    
+    /**
+     * Returns the position of the collaborator whit the name typed. 
+     * 
+     * @param name
+     * @return Collaborator's position
+     */
+    public int getCollabPosByName(String name) {
+        int pos = -1;
+        boolean isFound = false;
+        Employee[] collaborators = projects[10].getCollaborators();
+
+        for(int i = 0; i < collaborators.length & !isFound; i++) {
+            if(collaborators[i].getName().equals(name)) {
+                pos = i;
+                isFound = true;
+            }
+        }
+
+        return pos;
     }
 
     //Capsules

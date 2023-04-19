@@ -97,7 +97,7 @@ public class Main{
                 break;
             case 8: showFullerProject();
                 break;
-            case 9:
+            case 9: verifyCapsuleRegister();
                 break;
             case 10:
                 break;
@@ -411,6 +411,28 @@ public class Main{
         input.nextLine();
     }
 
+    /**
+     * This method show a confirmation if the collaborator typed has capsules registered
+     * 
+     */
+    public void verifyCapsuleRegister() {
+        String collabName;
+        String msg = "\nNo hay proyectos registrados.";
+
+        System.out.println("--------- VERIFICACIÓN DE REGISTRO DE CAPSULAS ----------");
+
+        if(controller.projectsIsEmpty() != -1) {
+            System.out.print("\nIngresa el nombre del colaborador: ");
+            collabName = input.nextLine();
+
+            msg = controller.verifyCapsuleRegister(collabName);
+        }
+
+        System.out.println(msg);
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
     //-------------Aux Methods -----------
 
     /**

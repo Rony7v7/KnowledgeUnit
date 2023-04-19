@@ -10,7 +10,7 @@ public class Employee {
     private String role;
     private String phoneManager; 
 
-    private ArrayList <String> collabCapsulesPos; //The employee save the capsules position registered in stages
+    private ArrayList <String> collabCapsulesIds; //The employee save the capsules id registered in stages
 
     /**
      * Creates a new Employee object with the given name, role, phone number and empty list of collabCapsulesPos.
@@ -23,7 +23,7 @@ public class Employee {
         this.name = name;
         this.role = role;
         this.phoneManager = phoneNumber;
-        this.collabCapsulesPos = new ArrayList<>();
+        this.collabCapsulesIds = new ArrayList<>();
     }
 
     //------- Getters -------
@@ -54,6 +54,15 @@ public class Employee {
         return role;
     }
 
+    /** 
+     * Returns the Ids of capsules in the project array
+     *  
+     * @return ArrayList<String> Array list with capsules Ids
+     */
+    public ArrayList<String> getCollabCapsulesIds() {
+        return collabCapsulesIds;
+    }
+
     //-------- Setters -------
     /**
      * Sets the phone number of the manager.
@@ -65,13 +74,12 @@ public class Employee {
     }
 
     /**
-     * Adds a capsule position to the list of the employee's capsules.
+     * Adds a capsule id to the list of the employee's capsules.
      *
-     * @param capsulePos the position of the capsule to add
+     * @param capsuleId the Id of the capsule to add
      */
-    public void addCapsule(String capsulePos) {
-        collabCapsulesPos.add(capsulePos);
+    public void addCapsule(String capsuleId) {
+        collabCapsulesIds.add(capsuleId);
     }
-
 
 }
