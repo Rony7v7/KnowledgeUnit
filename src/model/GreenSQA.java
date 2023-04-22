@@ -131,7 +131,7 @@ public class GreenSQA {
             projects[projectPos].approveCapsule(capsulePos);
             msg = "\nCapsula Aprobada exitosamente.";
         } else if(projectPos >= 0) {
-            msg ="\nNo hay capsulas para revisar.";
+            msg ="\nNo hay cápsulas para revisar.";
         }
 
         return msg;
@@ -150,7 +150,7 @@ public class GreenSQA {
         if(capsulePos >= 0) {
             msg = "\nCapsula Publicada exitosamente.\n"+projects[projectPos].publicCapsule(capsulePos);
         } else {
-            msg ="\nNo hay capsulas para publicar.";
+            msg ="\nNo hay cápsulas para publicar.";
         }
 
         return msg;
@@ -212,7 +212,7 @@ public class GreenSQA {
         ArrayList<String> collabCapsulesIds;
     
         if( collabPos != -1) {
-            msg = "\nEl colaborador ha registrado las siguientes capsulas: ";
+            msg = "\nEl colaborador ha registrado las siguientes cápsulas: ";
 
             for(int i = 0; i < projectsIsEmpty()+1; i++) {
                 collabCapsulesIds = projects[i].getCollaborators()[collabPos].getCollabCapsulesIds();
@@ -225,7 +225,7 @@ public class GreenSQA {
             }
 
             if(projectsEmpty == projectsIsEmpty()+1) {
-                msg = "\nEl colaborador no ha registrados capsulas en ningun proyecto.";
+                msg = "\nEl colaborador no ha registrados cápsulas en ningun proyecto.";
             }
 
         }
@@ -233,9 +233,21 @@ public class GreenSQA {
         return msg;
     }
 
-    // public void searchLesson() {
+    /**
+     * returns a string with info founded by a keyword search 
+     * @param keyword
+     * @return
+     */
+    public String searchCapsulesByKeyword(String keyword) {
+        String msg = "";
 
-    // }
+        for(int i = 0; i <= projectsIsEmpty(); i++ ) {
+            msg += "\n"+projects[i].searchCapsuleByHashtag(keyword);
+        }
+
+        return msg.isBlank()?"\nNo se encontraron cápsulas con las palabras clave ingresadas.":
+                             "\nResultado de la busqueda: "+msg;
+    }
     
     //Aux
     /**

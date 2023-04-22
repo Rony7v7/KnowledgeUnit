@@ -305,5 +305,29 @@ public class Stage {
 
         return url;
     }
+    
+    /** 
+     * Returns the capsules with the specified hashtag.
+     * @param hashtag
+     * @return String
+     */
+    public String searchCapsulesByHashtag(String hashtag) {
+        String msg = "";
+
+        for (Capsule capsule : capsulesApproved) {
+            if (capsule.getHashtags().contains(hashtag)) {
+                msg += "\n"+capsule.getInfo();
+            }
+        }
+
+        for (Capsule capsule : capsulesPublished) {
+            if (capsule.getHashtags().contains(hashtag)) {
+                msg += "\n"+capsule.getInfo();
+            }
+        }
+
+
+        return msg;
+    }
 
 }

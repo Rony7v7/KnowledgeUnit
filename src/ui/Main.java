@@ -99,7 +99,7 @@ public class Main{
                 break;
             case 9: verifyCapsuleRegister();
                 break;
-            case 10:
+            case 10: searchCapsulesByKeyword();
                 break;
             default:
                 break;
@@ -433,6 +433,30 @@ public class Main{
         System.out.print("\nENTER PARA CONTINUAR.");
         input.nextLine();
     }
+    
+    /**
+     * This method search the info of aproved and published capsules by keywords.
+     * 
+     */
+    public void searchCapsulesByKeyword() { 
+        String msg = "\nNo hay proyectos registrados.";
+        String keyword;
+
+        System.out.println("--------- BUSCAR CAPSULAS POR PALABRAS CLAVE ---------");
+
+        if(controller.projectsIsEmpty() != -1) {
+            System.out.print("\nIngresa el # que deseas buscar: ");
+            keyword =input.nextLine();
+
+            msg = controller.searchCapsulesByKeyword(keyword);
+        }
+
+        System.out.println(msg);
+
+        System.out.print("\nENTER PARA CONTINUAR.");
+        input.nextLine();
+    }
+    
     //-------------Aux Methods -----------
 
     /**

@@ -541,4 +541,21 @@ public class Project {
         return msg;
     }
 
+    /**
+     *  Returns the capsules with the specified hashtag per stage.
+     * @param hashtag
+     * @return
+     */
+    public String searchCapsuleByHashtag(String hashtag) {
+        String msg = "";
+        String msgPerStage = "";
+
+        for(int  i = 0; i < stages.length; i++) {
+            msgPerStage = stages[i].searchCapsulesByHashtag(hashtag);
+            msg += msgPerStage.isBlank()?  "":"\n" + msgPerStage;
+        }
+
+        return msg.isBlank()?"":msg;
+    }
+
 }
